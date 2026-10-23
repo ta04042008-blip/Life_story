@@ -1,0 +1,135 @@
+{
+  "schema_version": "0.1",
+  "status": "specification_default_for_worldwide_scope",
+  "purpose": "Make every birth year in the 2,000-calendar-year window and every broad world region selectable. Region weights are game-balance weights, not population shares.",
+  "birth_year_window": {
+    "from": 27,
+    "to": 2026,
+    "count": 2000,
+    "rule": "Select each calendar year with equal base probability unless a reviewed scenario data version supplies a documented alternative. This window advances with the reference year so it always contains 2,000 calendar-year labels ending at the reference year."
+  },
+  "sampling_order": [
+    "sample birth_year from the rolling 2,000-year window",
+    "sample macro_region using the authored game-balance weights",
+    "sample a place and community within the region using empirical or clearly labeled estimated weights",
+    "sample household and initial circumstances conditional on birth year and place"
+  ],
+  "macro_region_weights": {
+    "east_asia": 0.125,
+    "south_asia": 0.125,
+    "southeast_asia": 0.125,
+    "west_and_central_asia_north_africa": 0.125,
+    "sub_saharan_africa": 0.125,
+    "europe": 0.125,
+    "americas": 0.125,
+    "oceania": 0.125
+  },
+  "weight_policy": "Equal region weights are a transparent game design choice to keep each region present. They are not historically accurate population or birth shares. The player can see the sampled scope and the estimate label.",
+  "region_coverage": {
+    "east_asia": {
+      "reference_places": [
+        "Japan / Nihonmatsu and Niita",
+        "China / Suzhou"
+      ],
+      "coverage_tier": "deep_dive_anchor_plus_generic_estimated_scene_for_other_years_and_places"
+    },
+    "south_asia": {
+      "reference_places": [
+        "India / Agra"
+      ],
+      "coverage_tier": "deep_dive_anchor_plus_generic_estimated_scene_for_other_years_and_places"
+    },
+    "southeast_asia": {
+      "reference_places": [],
+      "coverage_tier": "generic_estimated_scene; add named place only after local authoring review"
+    },
+    "west_and_central_asia_north_africa": {
+      "reference_places": [],
+      "coverage_tier": "generic_estimated_scene; add named place only after local authoring review"
+    },
+    "sub_saharan_africa": {
+      "reference_places": [
+        "Mali / Timbuktu"
+      ],
+      "coverage_tier": "deep_dive_anchor_plus_generic_estimated_scene_for_other_years_and_places"
+    },
+    "europe": {
+      "reference_places": [
+        "France / Dijon"
+      ],
+      "coverage_tier": "deep_dive_anchor_plus_generic_estimated_scene_for_other_years_and_places"
+    },
+    "americas": {
+      "reference_places": [],
+      "coverage_tier": "generic_estimated_scene; add named place only after local authoring review"
+    },
+    "oceania": {
+      "reference_places": [],
+      "coverage_tier": "generic_estimated_scene; add named place only after local authoring review"
+    }
+  },
+  "timeline_policy": "Birth selection uses a continuous calendar year. Context data may be stored in ranges for source management, but a range edge does not itself cause a life-stage transition or scripted event. Each quarter resolves the context valid for the current location and year; person state and relationships persist across context updates.",
+  "data_gap_policy": "Where no empirical or local historical data exists, use a coherent game estimate with low/central/high sensitivity values and a visible estimate label. Do not represent a generic regional estimate as a specific city or people's measured history.",
+  "prototype_note": "The five historical-source and five present-day deep-dive anchors are the first richly authored places. Other years and broad regions remain selectable through clearly labeled generic estimated scenes; they do not claim a measured city, population, or local custom.",
+  "settlement_profile_weights": {
+    "urban_or_city": 0.3,
+    "town_or_market_center": 0.25,
+    "rural_or_village": 0.35,
+    "mobile_or_seasonal_livelihood": 0.1
+  },
+  "settlement_profile_policy": "Initial authoring weights for regions and years without local place data. These are broad fictional scene profiles, not a claim about historical settlement shares. A real named city is used only when a corresponding deep-dive context exists; otherwise the screen labels the location as a regional game estimate.",
+  "player_facing_labels": {
+    "birth_estimate": "ゲーム用推定の出生舞台",
+    "year_window": "西暦27年〜基準年（2,000暦年）",
+    "region_labels": {
+      "east_asia": "東アジア",
+      "south_asia": "南アジア",
+      "southeast_asia": "東南アジア",
+      "west_and_central_asia_north_africa": "西・中央アジア／北アフリカ",
+      "sub_saharan_africa": "サハラ以南アフリカ",
+      "europe": "ヨーロッパ",
+      "americas": "南北アメリカ",
+      "oceania": "オセアニア"
+    }
+  },
+  "mortality_coverage": {
+    "1950_to_2100": "Use WPP 2024 country series for the five deep-dive country anchors; other locations use a labeled regional game estimate until a local series is authored. WPP 2024-2100 values remain projection-series values even when a year has passed the current calendar year.",
+    "27_to_1949": "Use low/central/high age-specific game estimates, with rural or urban/trade life-pattern profile chosen from the generated setting. These estimates are not historical population measurements.",
+    "after_2100": "Continue with an explicitly labeled game hypothesis based on the terminal estimate; do not display as a published forecast."
+  },
+  "household_archetype_weights_by_settlement": {
+    "urban_or_city": {
+      "craft_or_trade_household": 0.3,
+      "service_or_wage_household": 0.3,
+      "public_or_community_household": 0.15,
+      "other_household": 0.25
+    },
+    "town_or_market_center": {
+      "craft_or_trade_household": 0.3,
+      "agriculture_or_pastoral_household": 0.25,
+      "transport_or_seasonal_household": 0.2,
+      "other_household": 0.25
+    },
+    "rural_or_village": {
+      "agriculture_or_pastoral_household": 0.5,
+      "craft_or_local_service_household": 0.15,
+      "land_poor_or_wage_household": 0.2,
+      "other_household": 0.15
+    },
+    "mobile_or_seasonal_livelihood": {
+      "pastoral_or_mobile_household": 0.45,
+      "trade_or_transport_household": 0.3,
+      "seasonal_wage_or_craft_household": 0.15,
+      "other_household": 0.1
+    }
+  },
+  "household_archetype_policy": "Use only after sampling a settlement profile, as provisional conditional story weights. Each category is deliberately broad and is not a historically attested social class. Add local categories when an authored deep-dive context supports them; preserve an other_household category.",
+  "context_resolution_order": [
+    "exact local-place and calendar-year record within the deep-dive context validity window",
+    "authored successor-context record for the current place and year",
+    "regional calendar-year-range record with evidence tier and uncertainty",
+    "generic region and settlement-profile game estimate"
+  ],
+  "context_id_template": "global:{macro_region}:{settlement_profile}:{calendar_year}",
+  "context_update_policy": "Resolve the best available record at each calendar year and quarter. Switching records changes applicable social-condition and event-generation parameters only; do not create a scripted age transition, reset character state, or automatically trigger an event at a range boundary."
+}

@@ -1,0 +1,123 @@
+{
+  "schema_version": "0.1",
+  "status": "modern_rates_extracted_historical_estimates_authored",
+  "not_fully_validated_release_model": true,
+  "public_enabled": false,
+  "purpose": "Track the derived contemporary mortality rates and the historical game estimates, including their distinct evidence status and remaining review needs.",
+  "estimate_acceptance_policy": "A scenario may use a clearly labeled game estimate when direct statistics are unavailable. Direct observation is not a release prerequisite. Keep the estimate range, evidence basis, uncertainty, and gameplay use visible; review balance and consistency before enabling the scenario.",
+  "required_rate_record_fields": [
+    "scenario_id",
+    "calendar_year_start",
+    "calendar_year_end",
+    "location_id",
+    "population_definition",
+    "sex_or_gender_data_category",
+    "age_start_exact_years",
+    "age_interval_years",
+    "measure",
+    "value",
+    "unit",
+    "source_url",
+    "source_version",
+    "source_table_or_file",
+    "transformation",
+    "uncertainty_interval",
+    "evidence_tier",
+    "license_status",
+    "reviewer_note"
+  ],
+  "conversion_policy": {
+    "preferred_measure": "one-year probability of death q_x between exact age x and x+1",
+    "wpp_2024_source": "Sex-specific and both-sexes life-table survivors l(x) at exact age, 1950-2023 estimates and 2024-2100 Medium variant projection; derive q_x=1-l_(x+1)/l_x from adjacent ages in the same country, year, and sex series.",
+    "from_survivors": "For a compatible period life table with positive l_x, q_x = 1 - l_(x+1)/l_x.",
+    "from_central_rate": "Do not treat central death rate m_x as q_x. Store the source definition and document a justified conversion before use.",
+    "quarterly_equal_hazard": "q_quarter = 1 - (1 - q_x)^(1/4); an explicit within-year constant hazard assumption.",
+    "public_release": "Requires age, period, population, geography, sex category, uncertainty, and successor-period coverage review. When estimates are used, label them as game estimates and retain their range. Confirm licenses for source-derived data."
+  },
+  "enablement_policy": "Missing empirical rates do not block use by themselves. Keep public_enabled false only until a scenario has a complete playable estimate or data series, clear labels, coherent event risks, and a reviewed sensitivity range.",
+  "modern_source": {
+    "title": "World Population Prospects 2024, MORT/F04 life-table survivors at exact age",
+    "catalogue_url": "https://population.un.org/wpp/assets/downloads.json",
+    "file_patterns": [
+      "WPP2024_MORT_F04_1_LIFE_TABLE_SURVIVORS_BOTH_SEXES.xlsx",
+      "WPP2024_MORT_F04_2_LIFE_TABLE_SURVIVORS_MALE.xlsx",
+      "WPP2024_MORT_F04_3_LIFE_TABLE_SURVIVORS_FEMALE.xlsx"
+    ],
+    "license": "CC BY 3.0 IGO; retain attribution and confirm release-specific terms",
+    "derived_data_files": [
+      "mortality-wpp2024-qx-both.csv.gz",
+      "mortality-wpp2024-qx-male.csv.gz",
+      "mortality-wpp2024-qx-female.csv.gz"
+    ],
+    "reproduction_script": "../tools/derive_wpp2024_qx.py",
+    "derived_data_coverage": "Japan, China, India, Mali, France; years 1950-2100; exact ages 0-99 plus an estimated 100+ open interval; annual q_x; estimates 1950-2023 and Medium variant projection 2024-2100.",
+    "transformation": "Read WPP MORT/F04 exact-age l(x) by country, year, and sex series; calculate q_x = 1 - l(x+1)/l(x) for ages 0-99. Estimate q_100+ by extending the nonnegative logit slope from q_98 to q_99, capped at 0.99. The terminal interval is a low-confidence game estimate, not a WPP value.",
+    "retrieved_on": "2026-10-23",
+    "sha256": {
+      "source_WPP2024_MORT_F04_1_LIFE_TABLE_SURVIVORS_BOTH_SEXES.xlsx": "a23ab42b88d00c4fdfb1ef4192d8e07f92551b3db05a51f3e57004d8ddfbc08a",
+      "source_WPP2024_MORT_F04_2_LIFE_TABLE_SURVIVORS_MALE.xlsx": "a2119fe0074f4dcc63770cc87f4e98b84413eac8c5a0d81bbe8327775612b916",
+      "source_WPP2024_MORT_F04_3_LIFE_TABLE_SURVIVORS_FEMALE.xlsx": "9164e9fd42902615338fbbbbbb3b632cd10c0f683905e797a206838a0b9fb08b",
+      "mortality-wpp2024-qx-both.csv.gz": "1f4ccc3d9c84d8aaac7bcd787abcea84e1ff361a784c3c6f0aa4ca0b62ebfacb",
+      "mortality-wpp2024-qx-male.csv.gz": "3919496443f55d869d94420d3710d0aa304e10659de60755e68e67d8581e9f59",
+      "mortality-wpp2024-qx-female.csv.gz": "2c32bd83cc6749a00ba46b53f2e1003e785fd880f0e31d01f8132855d0c967a8"
+    },
+    "use_limit": "National period life tables, not city-level observation. Estimates and Medium variant projection remain separately labelled. The 100+ interval is a documented extrapolation, not an observed WPP rate."
+  },
+  "historical_estimate_file": "mortality-historical-estimates.json",
+  "scenario_source_candidates": {
+    "jp_historical": {
+      "status": "game_estimate_created; empirical_table_not_required",
+      "candidate": "Rural agrarian authoring curve with an infant central estimate of 0.205 and a 0.18-0.23 range; supported only as a loose fit by a study of northeastern Tokugawa infant mortality, not as a Niita measurement.",
+      "known_limit": "Inter-register infant deaths may be absent; raw register counts cannot supply q0. Remaining age rates are low-confidence game estimates.",
+      "must_not_transfer": "Nishijo village estimates are not Niita rates."
+    },
+    "cn_historical": {
+      "status": "game_estimate_created; empirical_table_not_required",
+      "candidate": "Low-confidence urban trade age curve in mortality-historical-estimates.json; not a Suzhou population estimate."
+    },
+    "in_historical": {
+      "status": "game_estimate_created; empirical_table_not_required",
+      "candidate": "Low-confidence urban trade age curve in mortality-historical-estimates.json; not an Agra population estimate."
+    },
+    "ml_historical": {
+      "status": "game_estimate_created; empirical_table_not_required",
+      "candidate": "Low-confidence urban trade age curve in mortality-historical-estimates.json; not a Timbuktu population estimate."
+    },
+    "fr_historical": {
+      "status": "game_estimate_created; empirical_table_not_required",
+      "candidate": "Low-confidence urban trade age curve in mortality-historical-estimates.json; not a Dijon population estimate."
+    },
+    "jp_modern": {
+      "status": "rates_derived_1950_2100_age_0_100_plus",
+      "candidate": "UN WPP 2024 Japan period life-table l(x) transformed into q_x; estimated terminal tail at age 100+; national series, not Nihonmatsu measurements."
+    },
+    "cn_modern": {
+      "status": "rates_derived_1950_2100_age_0_100_plus",
+      "candidate": "UN WPP 2024 China period life-table l(x) transformed into q_x; estimated terminal tail at age 100+; national series, not Suzhou measurements."
+    },
+    "in_modern": {
+      "status": "rates_derived_1950_2100_age_0_100_plus",
+      "candidate": "UN WPP 2024 India period life-table l(x) transformed into q_x; estimated terminal tail at age 100+; national series, not Agra measurements."
+    },
+    "ml_modern": {
+      "status": "rates_derived_1950_2100_age_0_100_plus",
+      "candidate": "UN WPP 2024 Mali period life-table l(x) transformed into q_x; estimated terminal tail at age 100+; national series, not Timbuktu measurements."
+    },
+    "fr_modern": {
+      "status": "rates_derived_1950_2100_age_0_100_plus",
+      "candidate": "UN WPP 2024 France period life-table l(x) transformed into q_x; estimated terminal tail at age 100+; national series, not Dijon measurements."
+    }
+  },
+  "unresolved_release_fields": [
+    "historical_estimate_review",
+    "historical_year_change_and_crisis_profile",
+    "uncertainty_mode_review",
+    "regional_or_scenario_fit",
+    "sex_or_gender_application_policy",
+    "licensing_and_attribution",
+    "successor_period_coverage",
+    "sensitivity_analysis",
+    "source_attribution_review"
+  ],
+  "year_coverage_note": "The WPP series covers 1950 onward for the five named country anchors. Earlier years and countries/places outside these anchors use the explicitly labeled global or historical game-estimate profiles."
+}

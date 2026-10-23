@@ -1,0 +1,2277 @@
+{
+ "schema_version": "0.1",
+ "status": "implementation_authored_game_content",
+ "evidence_tier": "game_hypothesis",
+ "purpose": "Everyday small-choice events added by the implementation to fill the density gap the spec itself notes (24 templates cannot carry a whole life). Same shape as spec/data/events-initial.json. All wording is plain, context-neutral game writing: no historical claim, no real institution, custom or statistic. {scene} {work} {school} {mentor} {destination} {resources} are replaced by the current context's terms.",
+ "fallback_policy": {
+  "id": "life_policy",
+  "title": "今期の過ごし方",
+  "text": "ひとまず目の前の暮らしを進める時期です。今期はどのように過ごしますか。",
+  "text_infant": "養育者は、今期をどのように過ごすか考えています。",
+  "options": [
+   {
+    "id": "rest_infant",
+    "text": "休息と身の回りの世話を優先する",
+    "age_max": 5,
+    "effects": {
+     "health": 1
+    },
+    "focus_scores": {
+     "livelihood": 0,
+     "learning": 0,
+     "relationships": 1,
+     "health": 3
+    },
+    "risk": 0,
+    "personality_tags": {}
+   },
+   {
+    "id": "together_infant",
+    "text": "一緒に過ごす時間を作る",
+    "age_max": 5,
+    "effects": {
+     "happiness": 1,
+     "relationship.closeness": 1
+    },
+    "focus_scores": {
+     "livelihood": 0,
+     "learning": 0,
+     "relationships": 3,
+     "health": 1
+    },
+    "risk": 0,
+    "personality_tags": {}
+   },
+   {
+    "id": "rest",
+    "text": "無理をせず、休息を優先して過ごす",
+    "age_min": 6,
+    "effects": {
+     "health": 1
+    },
+    "focus_scores": {
+     "livelihood": 0,
+     "learning": 0,
+     "relationships": 0,
+     "health": 3
+    },
+    "risk": 0,
+    "personality_tags": {}
+   },
+   {
+    "id": "observe",
+    "text": "周りの様子を眺めて、気づいたことを覚えておく",
+    "age_min": 6,
+    "effects": {
+     "learning": 1,
+     "happiness": 1
+    },
+    "focus_scores": {
+     "livelihood": 0,
+     "learning": 2,
+     "relationships": 0,
+     "health": 1
+    },
+    "risk": 0,
+    "personality_tags": {}
+   },
+   {
+    "id": "help_home",
+    "text": "家のことを手伝って過ごす",
+    "age_min": 6,
+    "requires": {
+     "roles": [
+      "household_member"
+     ]
+    },
+    "effects": {
+     "resources": 1
+    },
+    "focus_scores": {
+     "livelihood": 3,
+     "learning": 0,
+     "relationships": 1,
+     "health": 0
+    },
+    "risk": 0,
+    "personality_tags": {}
+   },
+   {
+    "id": "time_with",
+    "text": "身近な人と過ごす時間を大切にする",
+    "age_min": 6,
+    "requires": {
+     "roles": [
+      "household_member"
+     ]
+    },
+    "effects": {
+     "happiness": 1,
+     "relationship.closeness": 1
+    },
+    "focus_scores": {
+     "livelihood": 0,
+     "learning": 0,
+     "relationships": 3,
+     "health": 1
+    },
+    "risk": 0,
+    "personality_tags": {}
+   }
+  ]
+ },
+ "events": [
+  {
+   "id": "infant_sleep_rhythm",
+   "title": "眠りと日課",
+   "text_standard": "養育者は、夜の眠りと昼の過ごし方をどう整えるか考えています。",
+   "text_brief": "養育者は、夜の眠りと昼の過ごし方をどう整えるか考えています。",
+   "kind": "small",
+   "age_min": 0,
+   "age_max": 5,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "caregiver"
+   ],
+   "choices": [
+    {
+     "id": "fixed",
+     "text": "決まった時間に休ませる",
+     "effects": {
+      "health": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "flexible",
+     "text": "その日の様子に合わせて過ごす",
+     "effects": {
+      "happiness": 1,
+      "relationship.closeness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 6,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "infant_first_words",
+   "title": "言葉が出はじめる",
+   "text_standard": "少しずつ言葉が出はじめました。養育者は、どう関わるか考えています。",
+   "text_brief": "少しずつ言葉が出はじめました。養育者は、どう関わるか考えています。",
+   "kind": "small",
+   "age_min": 1,
+   "age_max": 5,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "caregiver"
+   ],
+   "choices": [
+    {
+     "id": "talk",
+     "text": "たくさん話しかける",
+     "effects": {
+      "learning": 2,
+      "relationship.closeness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 3,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "play",
+     "text": "歌や遊びを通して関わる",
+     "effects": {
+      "happiness": 2,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 2,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "infant_watching",
+   "title": "見守りの手配",
+   "text_standard": "{work}の都合で、子どもを誰がどこで見守るかを決める必要があります。",
+   "text_brief": "{work}の都合で、子どもを誰がどこで見守るかを決める必要があります。",
+   "kind": "small",
+   "age_min": 0,
+   "age_max": 5,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "caregiver"
+   ],
+   "choices": [
+    {
+     "id": "bring",
+     "text": "手元に置いて一緒に過ごす",
+     "effects": {
+      "relationship.closeness": 1,
+      "resources": 1,
+      "health": -1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "ask",
+     "text": "周りの人に預けて見てもらう",
+     "effects": {
+      "relationship.trust": 1,
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 1,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "infant_visitors",
+   "title": "訪ねてくる人たち",
+   "text_standard": "近所や親族が、子どもに会いに訪ねてきました。",
+   "text_brief": "近所や親族が、子どもに会いに訪ねてきました。",
+   "kind": "small",
+   "age_min": 0,
+   "age_max": 5,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "caregiver"
+   ],
+   "choices": [
+    {
+     "id": "meet",
+     "text": "会わせてゆっくり過ごす",
+     "effects": {
+      "happiness": 1,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 1,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "quiet",
+     "text": "静かに休ませる",
+     "effects": {
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 0,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "play_outdoors",
+   "title": "外での時間",
+   "text_standard": "きょうは自由に使える時間があります。体を動かすか、静かに過ごすか選べます。",
+   "text_brief": "きょうは自由に使える時間があります。体を動かすか、静かに過ごすか選べます。",
+   "kind": "small",
+   "age_min": 6,
+   "age_max": 12,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "active",
+     "text": "外で体を動かして過ごす",
+     "effects": {
+      "health": 2,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": 1
+     }
+    },
+    {
+     "id": "quiet",
+     "text": "静かに過ごす",
+     "effects": {
+      "happiness": 1,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 6,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "tell_stories",
+   "title": "語られる話",
+   "text_standard": "家の人が、昔の出来事や身の回りの話を聞かせてくれます。",
+   "text_brief": "家の人が、昔の出来事や身の回りの話を聞かせてくれます。",
+   "kind": "small",
+   "age_min": 6,
+   "age_max": 14,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "listen",
+     "text": "耳を傾けて聞く",
+     "effects": {
+      "learning": 1,
+      "happiness": 1,
+      "relationship.trust": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "tell",
+     "text": "自分が見聞きしたことを話してみる",
+     "effects": {
+      "charm": 1,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1,
+      "approach": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "errand_for_family",
+   "title": "家のための用事",
+   "text_standard": "{scene}の中で、家の用事を頼まれました。",
+   "text_brief": "{scene}の中で、家の用事を頼まれました。",
+   "kind": "small",
+   "age_min": 8,
+   "age_max": 17,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "accept",
+     "text": "引き受ける",
+     "effects": {
+      "resources": 1,
+      "relationship.trust": 1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "study",
+     "text": "今は自分の学びの時間を確保したいと伝える",
+     "effects": {
+      "learning": 1,
+      "relationship.tension": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 3,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "new_neighbor_child",
+   "title": "近所の新しい顔",
+   "text_standard": "同じ年頃の子が、近くで暮らしているのを見かけました。",
+   "text_brief": "同じ年頃の子が、近くで暮らしているのを見かけました。",
+   "kind": "small",
+   "age_min": 5,
+   "age_max": 14,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "hello",
+     "text": "声をかけてみる",
+     "effects": {
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": 1
+     },
+     "creates": {
+      "kin": "peer",
+      "tags": [
+       "peer"
+      ],
+      "age_offset": [
+       -2,
+       2
+      ],
+      "min_age": 4
+     }
+    },
+    {
+     "id": "watch",
+     "text": "少し離れて様子を見る",
+     "effects": {
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 1,
+      "relationships": 1,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above",
+   "context_requires": {
+    "all": [
+     "few_peers"
+    ]
+   }
+  },
+  {
+   "id": "weather_hardship",
+   "title": "天候と暮らし",
+   "text_standard": "天候や物の値段の変わり目で、{resources}がやりくりしづらい時期です。",
+   "text_brief": "天候や物の値段の変わり目で、{resources}がやりくりしづらい時期です。",
+   "kind": "small",
+   "age_min": 6,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "prepare",
+     "text": "備えを増やして乗り切ろうとする",
+     "effects": {
+      "resources": -1,
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 1,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1,
+      "approach": -1
+     }
+    },
+    {
+     "id": "usual",
+     "text": "いつも通りに過ごす",
+     "effects": {
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 1,
+      "health": 1
+     },
+     "risk": 1,
+     "personality_tags": {
+      "time": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "dream_future",
+   "title": "これからのこと",
+   "text_standard": "これからどんな暮らしをしたいか、ふと考える時間が増えました。",
+   "text_brief": "これからどんな暮らしをしたいか、ふと考える時間が増えました。",
+   "kind": "small",
+   "age_min": 12,
+   "age_max": 24,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "ask",
+     "text": "身近な人に話を聞いてみる",
+     "effects": {
+      "learning": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "research",
+     "text": "自分で調べて考えを整理する",
+     "effects": {
+      "learning": 2
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 3,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1,
+      "time": -1
+     }
+    },
+    {
+     "id": "later",
+     "text": "いまは深く考えすぎないでおく",
+     "effects": {
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "rest_day",
+   "title": "人の集まる日",
+   "text_standard": "人の集まる日が近づいています。出かけるか、家で過ごすか選べます。",
+   "text_brief": "人の集まる日が近づいています。出かけるか、家で過ごすか選べます。",
+   "kind": "small",
+   "age_min": 6,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "go",
+     "text": "人の集まる場へ出かける",
+     "effects": {
+      "happiness": 2,
+      "charm": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": 1
+     }
+    },
+    {
+     "id": "stay",
+     "text": "家で静かに過ごす",
+     "effects": {
+      "health": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "help_neighbor",
+   "title": "近所の手助け",
+   "text_standard": "近所の人が、手が足りずに困っている様子です。",
+   "text_brief": "近所の人が、手が足りずに困っている様子です。",
+   "kind": "small",
+   "age_min": 13,
+   "age_max": 90,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "help",
+     "text": "手を貸す",
+     "effects": {
+      "resources": -1,
+      "charm": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "own",
+     "text": "自分の用事を優先する",
+     "effects": {
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "learn_from_mistake",
+   "title": "うまくいかなかったこと",
+   "text_standard": "進めていたことが、思うようにいきませんでした。",
+   "text_brief": "進めていたことが、思うようにいきませんでした。",
+   "kind": "small",
+   "age_min": 10,
+   "age_max": 60,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "rethink",
+     "text": "原因を自分で考え直す",
+     "effects": {
+      "learning": 2
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 3,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1,
+      "time": -1
+     }
+    },
+    {
+     "id": "advice",
+     "text": "周りに助言を求める",
+     "effects": {
+      "learning": 1,
+      "charm": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "quiet_hobby",
+   "title": "好きなことに使う時間",
+   "text_standard": "少し時間に余裕ができました。何に使うか選べます。",
+   "text_brief": "少し時間に余裕ができました。何に使うか選べます。",
+   "kind": "small",
+   "age_min": 10,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "favorite",
+     "text": "好きなことに時間を使う",
+     "effects": {
+      "happiness": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": 1,
+      "change": 1
+     }
+    },
+    {
+     "id": "useful",
+     "text": "役に立つことに時間を使う",
+     "effects": {
+      "resources": 1,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 2,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "travel_errand",
+   "title": "出かける用事",
+   "text_standard": "{destination}へ出向く用事ができました。",
+   "text_brief": "{destination}へ出向く用事ができました。",
+   "kind": "small",
+   "age_min": 10,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "go",
+     "text": "同行して様子を見てくる",
+     "effects": {
+      "learning": 1,
+      "happiness": 1,
+      "resources": -1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 1,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "change": 1,
+      "approach": 1
+     }
+    },
+    {
+     "id": "stay",
+     "text": "留守を預かって家のことを進める",
+     "effects": {
+      "resources": 1,
+      "relationship.trust": 1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 1,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "change": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "new_method_rumor",
+   "title": "新しいやり方の噂",
+   "text_standard": "{work}について、新しい道具ややり方があるという噂を耳にしました。",
+   "text_brief": "{work}について、新しい道具ややり方があるという噂を耳にしました。",
+   "kind": "small",
+   "age_min": 16,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "try",
+     "text": "確かめて試してみる",
+     "effects": {
+      "learning": 2,
+      "resources": -1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 3,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "change": 1,
+      "approach": 1
+     }
+    },
+    {
+     "id": "keep",
+     "text": "慣れたやり方を続ける",
+     "effects": {
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "change": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "community_gathering",
+   "title": "寄り合い",
+   "text_standard": "{scene}の中で、人々が集まって話し合う機会があります。",
+   "text_brief": "{scene}の中で、人々が集まって話し合う機会があります。",
+   "kind": "small",
+   "age_min": 13,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "prepare",
+     "text": "準備や世話を手伝う",
+     "effects": {
+      "charm": 1,
+      "happiness": 1,
+      "resources": -1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "attend",
+     "text": "顔を出して、話を聞いて帰る",
+     "effects": {
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 1,
+      "relationships": 2,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "family_disagreement",
+   "title": "家の中の行き違い",
+   "text_standard": "家の中で、考えの行き違いが起きました。",
+   "text_brief": "家の中で、考えの行き違いが起きました。",
+   "kind": "small",
+   "age_min": 13,
+   "age_max": 60,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "talk",
+     "text": "落ち着いて話し合う",
+     "effects": {
+      "relationship.tension": -2,
+      "relationship.trust": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    },
+    {
+     "id": "wait",
+     "text": "少し時間を置く",
+     "effects": {
+      "relationship.tension": -1,
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 2,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "save_for_goal",
+   "title": "目標のための蓄え",
+   "text_standard": "ある目標のために、{resources}をどう使うか考えています。",
+   "text_brief": "ある目標のために、{resources}をどう使うか考えています。",
+   "kind": "small",
+   "age_min": 16,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "save",
+     "text": "少しずつ蓄える",
+     "effects": {
+      "resources": 2,
+      "happiness": -1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    },
+    {
+     "id": "invest",
+     "text": "目標のために思い切って使う",
+     "effects": {
+      "resources": -2,
+      "learning": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 2,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 2,
+     "personality_tags": {
+      "approach": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "meet_acquaintance",
+   "title": "知り合うきっかけ",
+   "text_standard": "{scene}の中で、気の合いそうな人を見かけました。",
+   "text_brief": "{scene}の中で、気の合いそうな人を見かけました。",
+   "kind": "small",
+   "age_min": 13,
+   "age_max": 60,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "hello",
+     "text": "自分から話しかけてみる",
+     "effects": {
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": 1
+     },
+     "creates": {
+      "kin": "friend",
+      "tags": [
+       "friend"
+      ],
+      "age_offset": [
+       -6,
+       6
+      ],
+      "min_age": 10
+     }
+    },
+    {
+     "id": "wait",
+     "text": "きっかけが来るのを待つ",
+     "effects": {
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 0,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above",
+   "context_requires": {
+    "all": [
+     "few_friends"
+    ]
+   }
+  },
+  {
+   "id": "seek_guidance",
+   "title": "教えを請う",
+   "text_standard": "{mentor}に、これからのやり方を相談してみたい気持ちが湧いてきました。",
+   "text_brief": "{mentor}に、これからのやり方を相談してみたい気持ちが湧いてきました。",
+   "kind": "small",
+   "age_min": 12,
+   "age_max": 50,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "ask",
+     "text": "訪ねて教えを請う",
+     "effects": {
+      "learning": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 3,
+      "relationships": 1,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": 1
+     },
+     "creates": {
+      "kin": "mentor",
+      "tags": [
+       "mentor"
+      ],
+      "age_offset": [
+       14,
+       28
+      ],
+      "min_age": 24,
+      "closeness_boost": 0
+     }
+    },
+    {
+     "id": "alone",
+     "text": "もう少し自分で続けてみる",
+     "effects": {
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 2,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 14,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above",
+   "context_requires": {
+    "all": [
+     "no_mentor"
+    ]
+   }
+  },
+  {
+   "id": "illness_nearby",
+   "title": "家の人の不調",
+   "text_standard": "家の人が体調を崩し、しばらく休んでいます。",
+   "text_brief": "家の人が体調を崩し、しばらく休んでいます。",
+   "kind": "small",
+   "age_min": 10,
+   "age_max": 90,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "nurse",
+     "text": "付き添って世話を引き受ける",
+     "effects": {
+      "health": -1,
+      "relationship.trust": 2,
+      "relationship.closeness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "ask",
+     "text": "周りの助けも借りて分担する",
+     "effects": {
+      "relationship.trust": 1,
+      "resources": -1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [
+    "illness"
+   ],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "old_friend_contact",
+   "title": "久しぶりの便り",
+   "text_standard": "しばらく会えていない友人のことが、ふと気にかかりました。",
+   "text_brief": "しばらく会えていない友人のことが、ふと気にかかりました。",
+   "kind": "small",
+   "age_min": 18,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "friend"
+   ],
+   "choices": [
+    {
+     "id": "meet",
+     "text": "連絡を取って会う",
+     "effects": {
+      "relationship.closeness": 3,
+      "happiness": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "later",
+     "text": "落ち着いたころに会うことにする",
+     "effects": {
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 1,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "work_dispute",
+   "title": "仕事上の行き違い",
+   "text_standard": "{work}をめぐって、取り決めに食い違いが出てきました。",
+   "text_brief": "{work}をめぐって、取り決めに食い違いが出てきました。",
+   "kind": "small",
+   "age_min": 18,
+   "age_max": 64,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "negotiate",
+     "text": "条件の見直しを相談する",
+     "effects": {
+      "resources": 1,
+      "charm": 1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 1,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "judgment": -1,
+      "approach": 1
+     }
+    },
+    {
+     "id": "endure",
+     "text": "いまは黙って続ける",
+     "effects": {
+      "happiness": -1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 14,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above",
+   "context_requires": {
+    "all": [
+     "work_active"
+    ]
+   }
+  },
+  {
+   "id": "child_needs_attention",
+   "title": "子どもとの時間",
+   "text_standard": "子どもが、一緒に過ごす時間を求めています。",
+   "text_brief": "子どもが、一緒に過ごす時間を求めています。",
+   "kind": "small",
+   "age_min": 22,
+   "age_max": 65,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "dependent"
+   ],
+   "choices": [
+    {
+     "id": "together",
+     "text": "手を止めて一緒に過ごす",
+     "effects": {
+      "relationship.closeness": 3,
+      "happiness": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "work",
+     "text": "仕事を優先して、周りに任せる",
+     "effects": {
+      "resources": 2,
+      "relationship.closeness": -1
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "partner_time",
+   "title": "二人の時間",
+   "text_standard": "パートナーと、これからの暮らしについて話す時間が取れそうです。",
+   "text_brief": "パートナーと、これからの暮らしについて話す時間が取れそうです。",
+   "kind": "small",
+   "age_min": 18,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "spouse"
+   ],
+   "choices": [
+    {
+     "id": "together",
+     "text": "二人の時間を作る",
+     "effects": {
+      "relationship.closeness": 3,
+      "happiness": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "plan",
+     "text": "先の備えについて話し合う",
+     "effects": {
+      "relationship.trust": 2,
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "body_slows",
+   "title": "体の変化",
+   "text_standard": "以前のようには動けないと感じる場面が増えてきました。",
+   "text_brief": "以前のようには動けないと感じる場面が増えてきました。",
+   "kind": "small",
+   "age_min": 50,
+   "age_max": 110,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "adapt",
+     "text": "無理をせず動き方を変える",
+     "effects": {
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 0,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    },
+    {
+     "id": "push",
+     "text": "これまで通りに続ける",
+     "effects": {
+      "health": -1,
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "change": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "memory_keeping",
+   "title": "思い出を整える",
+   "text_standard": "これまでの暮らしを振り返る時間が増えてきました。",
+   "text_brief": "これまでの暮らしを振り返る時間が増えてきました。",
+   "kind": "small",
+   "age_min": 50,
+   "age_max": 110,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "tell",
+     "text": "思い出を身近な人に語る",
+     "effects": {
+      "happiness": 2,
+      "relationship.closeness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 1,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "sort",
+     "text": "身の回りを整理しておく",
+     "effects": {
+      "resources": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 1,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "unexpected_expense",
+   "title": "思いがけない出費",
+   "text_standard": "思いがけない出費が必要になりました。",
+   "text_brief": "思いがけない出費が必要になりました。",
+   "kind": "small",
+   "age_min": 16,
+   "age_max": 90,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "reserve",
+     "text": "蓄えから出す",
+     "effects": {
+      "resources": -3
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1
+     }
+    },
+    {
+     "id": "ask",
+     "text": "周りに頼って分担する",
+     "effects": {
+      "resources": -1,
+      "happiness": -1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "judgment": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "news_from_afar",
+   "title": "遠くからの知らせ",
+   "text_standard": "{destination}から知らせが届きました。",
+   "text_brief": "{destination}から知らせが届きました。",
+   "kind": "small",
+   "age_min": 16,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "share",
+     "text": "周りに伝えて話し合う",
+     "effects": {
+      "learning": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 2,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "think",
+     "text": "受け止めて、自分の暮らしを見直す",
+     "effects": {
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 2,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "time": -1,
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "community_role",
+   "title": "世話役の依頼",
+   "text_standard": "{scene}の中で、まとめ役を頼まれました。",
+   "text_brief": "{scene}の中で、まとめ役を頼まれました。",
+   "kind": "small",
+   "age_min": 25,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "accept",
+     "text": "引き受ける",
+     "effects": {
+      "charm": 2,
+      "resources": -1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 1,
+      "relationships": 3,
+      "health": 0
+     },
+     "risk": 1,
+     "personality_tags": {
+      "judgment": 1
+     }
+    },
+    {
+     "id": "decline",
+     "text": "今回は辞退する",
+     "effects": {
+      "resources": 1,
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 0,
+      "relationships": 0,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 16,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "busy_season",
+   "title": "忙しい時期",
+   "text_standard": "{work}が忙しくなる時期です。",
+   "text_brief": "{work}が忙しくなる時期です。",
+   "kind": "small",
+   "age_min": 14,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "share",
+     "text": "皆で分担して乗り切る",
+     "effects": {
+      "resources": 1,
+      "relationship.closeness": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 3,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "alone",
+     "text": "長い時間を自分で引き受ける",
+     "effects": {
+      "resources": 3,
+      "health": -2
+     },
+     "focus_scores": {
+      "livelihood": 3,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 2,
+     "personality_tags": {
+      "approach": 1
+     }
+    }
+   ],
+   "cooldown_quarters": 10,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "home_improvement",
+   "title": "住まいの手入れ",
+   "text_standard": "住まいに手を入れるかどうか、考える時期が来ました。",
+   "text_brief": "住まいに手を入れるかどうか、考える時期が来ました。",
+   "kind": "small",
+   "age_min": 20,
+   "age_max": 80,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "repair",
+     "text": "手を入れて住みやすくする",
+     "effects": {
+      "resources": -2,
+      "health": 1,
+      "happiness": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 1,
+      "health": 3
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "asis",
+     "text": "今のまま使い続ける",
+     "effects": {
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 14,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "shared_meal",
+   "title": "食卓を囲む",
+   "text_standard": "家の人と食事を共にする時間が取れそうです。",
+   "text_brief": "家の人と食事を共にする時間が取れそうです。",
+   "kind": "small",
+   "age_min": 6,
+   "age_max": 100,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "together",
+     "text": "ゆっくり食卓を囲む",
+     "effects": {
+      "happiness": 1,
+      "relationship.closeness": 2,
+      "health": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 0,
+      "relationships": 3,
+      "health": 2
+     },
+     "risk": 0,
+     "personality_tags": {}
+    },
+    {
+     "id": "quick",
+     "text": "手早く済ませて用事を片づける",
+     "effects": {
+      "resources": 1
+     },
+     "focus_scores": {
+      "livelihood": 2,
+      "learning": 0,
+      "relationships": 0,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {}
+    }
+   ],
+   "cooldown_quarters": 8,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "skill_showcase",
+   "title": "腕前を見せる機会",
+   "text_standard": "身につけてきたことを、人前で試す機会が巡ってきました。",
+   "text_brief": "身につけてきたことを、人前で試す機会が巡ってきました。",
+   "kind": "small",
+   "age_min": 14,
+   "age_max": 60,
+   "capabilities_all": [],
+   "required_person_roles": [],
+   "choices": [
+    {
+     "id": "show",
+     "text": "思い切って披露する",
+     "effects": {
+      "charm": 2,
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 2,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 2,
+     "personality_tags": {
+      "approach": 1
+     }
+    },
+    {
+     "id": "prepare",
+     "text": "もう少し準備してからにする",
+     "effects": {
+      "learning": 1
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 3,
+      "relationships": 0,
+      "health": 1
+     },
+     "risk": 0,
+     "personality_tags": {
+      "approach": -1,
+      "time": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  },
+  {
+   "id": "elder_advice",
+   "title": "年長者の知恵",
+   "text_standard": "年長の人が、経験から得た心得を話してくれました。",
+   "text_brief": "年長の人が、経験から得た心得を話してくれました。",
+   "kind": "small",
+   "age_min": 12,
+   "age_max": 70,
+   "capabilities_all": [],
+   "required_person_roles": [
+    "household_member"
+   ],
+   "choices": [
+    {
+     "id": "follow",
+     "text": "教わった通りに試してみる",
+     "effects": {
+      "learning": 1,
+      "relationship.trust": 1
+     },
+     "focus_scores": {
+      "livelihood": 1,
+      "learning": 2,
+      "relationships": 2,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "change": -1
+     }
+    },
+    {
+     "id": "ask",
+     "text": "理由を尋ね、自分なりに考える",
+     "effects": {
+      "learning": 2
+     },
+     "focus_scores": {
+      "livelihood": 0,
+      "learning": 3,
+      "relationships": 1,
+      "health": 0
+     },
+     "risk": 0,
+     "personality_tags": {
+      "change": 1,
+      "judgment": -1
+     }
+    }
+   ],
+   "cooldown_quarters": 12,
+   "max_occurrences": null,
+   "weight": 1,
+   "origin": "implementation_authored",
+   "historical_claim": false,
+   "content_tags": [],
+   "source_ids": [],
+   "effects_status": "game_tuning_not_measured",
+   "personality_owner": "protagonist_if_age_6_or_above"
+  }
+ ]
+}

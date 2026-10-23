@@ -1,0 +1,107 @@
+{
+  "schema_version": "0.1",
+  "status": "implementation_authored_game_estimate",
+  "evidence_tier": "game_estimate",
+  "purpose": "Generic (non-named) birth scenes and the year-by-year social conditions for every life. These are broad, deliberately plain scene profiles. They never name a real city, a local custom or a historical statistic.",
+  "label_generic": "ゲーム用推定の出生舞台",
+  "eras": [
+    {
+      "id": "premodern", "from": 27, "to": 1799, "label": "近代以前（ゲーム用の大づかみな区分）",
+      "mortality": "historical",
+      "scene_style": "premodern",
+      "opportunity_profile": { "urban_or_city": "historical_urban_trade", "town_or_market_center": "historical_urban_trade", "rural_or_village": "historical_rural", "mobile_or_seasonal_livelihood": "historical_rural" },
+      "learning_kinds": { "urban_or_city": ["household", "community", "master"], "town_or_market_center": ["household", "community", "master"], "rural_or_village": ["household", "community"], "mobile_or_seasonal_livelihood": ["household"] },
+      "self_study_materials": false,
+      "writing_common": false
+    },
+    {
+      "id": "industrializing", "from": 1800, "to": 1949, "label": "産業化と大きな変動の時期（ゲーム用の大づかみな区分）",
+      "mortality": "historical",
+      "scene_style": "industrial",
+      "opportunity_profile": { "urban_or_city": "transition_mixed", "town_or_market_center": "transition_mixed", "rural_or_village": "historical_rural", "mobile_or_seasonal_livelihood": "historical_rural" },
+      "learning_kinds": { "urban_or_city": ["household", "community", "master", "school"], "town_or_market_center": ["household", "community", "master", "school"], "rural_or_village": ["household", "community", "school"], "mobile_or_seasonal_livelihood": ["household", "community"] },
+      "self_study_materials": false,
+      "writing_common": false
+    },
+    {
+      "id": "postwar", "from": 1950, "to": 1999, "label": "20世紀後半（ゲーム用の大づかみな区分）",
+      "mortality": "country_or_blend",
+      "scene_style": "midcentury",
+      "opportunity_profile": { "urban_or_city": "transition_mixed", "town_or_market_center": "transition_mixed", "rural_or_village": "transition_mixed", "mobile_or_seasonal_livelihood": "historical_rural" },
+      "learning_kinds": { "urban_or_city": ["household", "community", "school"], "town_or_market_center": ["household", "community", "school"], "rural_or_village": ["household", "community", "school"], "mobile_or_seasonal_livelihood": ["household", "community"] },
+      "self_study_materials": true,
+      "writing_common": true
+    },
+    {
+      "id": "contemporary", "from": 2000, "to": 2100, "label": "2000年以降（2026年までは過去、以降は公表予測とゲーム用仮説）",
+      "mortality": "country_or_blend",
+      "scene_style": "contemporary",
+      "opportunity_profile": { "urban_or_city": "modern_school_work", "town_or_market_center": "modern_school_work", "rural_or_village": "modern_school_work", "mobile_or_seasonal_livelihood": "transition_mixed" },
+      "learning_kinds": { "urban_or_city": ["household", "community", "school"], "town_or_market_center": ["household", "community", "school"], "rural_or_village": ["household", "community", "school"], "mobile_or_seasonal_livelihood": ["household", "community", "school"] },
+      "self_study_materials": true,
+      "writing_common": true
+    },
+    {
+      "id": "beyond", "from": 2101, "to": 9999, "label": "2101年以降（公表予測の外。ゲーム用仮説）",
+      "mortality": "country_or_blend",
+      "scene_style": "beyond",
+      "opportunity_profile": { "urban_or_city": "modern_school_work", "town_or_market_center": "modern_school_work", "rural_or_village": "modern_school_work", "mobile_or_seasonal_livelihood": "transition_mixed" },
+      "learning_kinds": { "urban_or_city": ["household", "community", "school"], "town_or_market_center": ["household", "community", "school"], "rural_or_village": ["household", "community", "school"], "mobile_or_seasonal_livelihood": ["household", "community", "school"] },
+      "self_study_materials": true,
+      "writing_common": true
+    }
+  ],
+  "extra_opportunity_profiles": {
+    "transition_mixed": {
+      "learning": [0.15, 0.4],
+      "paid_or_household_work": [0.2, 0.55],
+      "migration": [0.02, 0.1],
+      "care_support": [0.15, 0.45],
+      "note": "Implementation-authored blend between the spec's historical_* and modern_school_work ranges. Game hypothesis, not a measured rate."
+    }
+  },
+  "term_era_for_era": { "premodern": "premodern", "industrializing": "industrial", "postwar": "late20", "contemporary": "contemporary", "beyond": "contemporary" },
+  "terms": {
+    "urban_or_city": {
+      "premodern": { "scene": "町の暮らし", "work": "家の生業", "school": "文字や知識を教わる場", "mentor": "仕事を教える人", "destination": "別の町", "resources": "世帯の蓄え" },
+      "industrial": { "scene": "都市の暮らし", "work": "家の仕事や雇われ仕事", "school": "学べる場", "mentor": "仕事を教える人", "destination": "別の都市や村", "resources": "世帯の蓄え" },
+      "late20": { "scene": "都市の暮らし", "work": "勤めや商いや家の仕事", "school": "学校や学べる場", "mentor": "指導者", "destination": "別の町", "resources": "家計" },
+      "contemporary": { "scene": "都市の暮らし", "work": "勤めや事業や家の仕事", "school": "学校や学習の場", "mentor": "指導者", "destination": "別の地域", "resources": "家計と生活資源" }
+    },
+    "town_or_market_center": {
+      "premodern": { "scene": "町や市場の暮らし", "work": "家の生業", "school": "読み書きや知識を教わる場", "mentor": "仕事を教える人", "destination": "別の町や村", "resources": "世帯の蓄え" },
+      "industrial": { "scene": "町の暮らし", "work": "家の仕事や雇われ仕事", "school": "学べる場", "mentor": "仕事を教える人", "destination": "別の町や都市", "resources": "世帯の蓄え" },
+      "late20": { "scene": "町の暮らし", "work": "勤めや商いや家の仕事", "school": "学校や学べる場", "mentor": "指導者", "destination": "別の町", "resources": "家計" },
+      "contemporary": { "scene": "町の暮らし", "work": "勤めや商いや家の仕事", "school": "学校や学習の場", "mentor": "指導者", "destination": "別の地域", "resources": "家計と生活資源" }
+    },
+    "rural_or_village": {
+      "premodern": { "scene": "村の暮らし", "work": "家の生業（畑や家畜、手仕事など）", "school": "身近な人から教わる場", "mentor": "手仕事を教える人", "destination": "近隣の集落", "resources": "暮らしの蓄え" },
+      "industrial": { "scene": "村の暮らし", "work": "家の生業や出稼ぎの仕事", "school": "身近な人から教わる場", "mentor": "仕事を教える人", "destination": "近隣の町", "resources": "暮らしの蓄え" },
+      "late20": { "scene": "村の暮らし", "work": "家の生業や勤め", "school": "学校や教わる場", "mentor": "指導者", "destination": "近隣の町", "resources": "家計" },
+      "contemporary": { "scene": "地域の暮らし", "work": "家の生業や勤め", "school": "学校や学習の場", "mentor": "指導者", "destination": "近隣の町や別の地域", "resources": "家計と生活資源" }
+    },
+    "mobile_or_seasonal_livelihood": {
+      "premodern": { "scene": "移動を含む暮らし", "work": "季節ごとの生業", "school": "身近な人から教わる場", "mentor": "生業を教える人", "destination": "次の滞在地", "resources": "暮らしの蓄え" },
+      "industrial": { "scene": "移動を含む暮らし", "work": "季節ごとの生業", "school": "身近な人から教わる場", "mentor": "生業を教える人", "destination": "次の滞在地", "resources": "暮らしの蓄え" },
+      "late20": { "scene": "移動を含む暮らし", "work": "季節ごとの生業", "school": "教わる場", "mentor": "生業を教える人", "destination": "次の滞在地", "resources": "家計と蓄え" },
+      "contemporary": { "scene": "移動を含む暮らし", "work": "季節ごとの生業", "school": "教わる場や学習の場", "mentor": "指導者", "destination": "次の滞在地", "resources": "家計と生活資源" }
+    }
+  },
+  "name_pools": {
+    "generic": {
+      "note": "架空の呼び名。実在の命名慣習を表すものではありません。",
+      "syllables_a": ["ア", "イ", "ウ", "エ", "オ", "カ", "ケ", "サ", "シ", "セ", "タ", "ト", "ナ", "ニ", "ネ", "ハ", "ヒ", "マ", "ミ", "メ", "ヤ", "ユ", "ラ", "リ", "ル", "レ", "ロ"],
+      "syllables_b": ["ナ", "ミ", "ラ", "ル", "ト", "ネ", "リ", "ノ", "ケ", "ソ", "メ", "ヤ", "ダ", "ベ", "ガ", "ロ", "ン"]
+    },
+    "jp_historical": { "female": ["おとめ", "おすず", "おきく", "おまつ", "おみよ", "おたね", "おとよ", "おさく", "おなつ", "おふじ"], "male": ["与兵衛", "太助", "源七", "清吉", "惣吉", "久蔵", "佐平", "弥助", "喜八", "甚五郎"] },
+    "cn_historical": { "female": ["阿秀", "桂香", "玉蘭", "巧雲", "春梅", "素娥", "月娥", "金鳳"], "male": ["阿福", "徳昌", "文元", "子安", "永泰", "瑞祥", "士奇", "有成"] },
+    "in_historical": { "female": ["ラーダー", "ガンガー", "ザイナブ", "ヌール", "サーヴィトリー", "ファーティマ", "ミーラー"], "male": ["ラーム", "ハリ", "ファリード", "ダヤール", "ムラリ", "ラヒーム", "ガネーシュ"] },
+    "ml_historical": { "female": ["ファトゥマタ", "アイサタ", "ハディザ", "ミリアム", "ケネ", "ナナ"], "male": ["アハメド", "マハムード", "ムーサ", "アルファ", "サリフ", "ウマル"] },
+    "fr_historical": { "female": ["マリー", "ジャンヌ", "カトリーヌ", "マルグリット", "アンヌ", "ルイーズ"], "male": ["ジャン", "ピエール", "クロード", "ギヨーム", "エティエンヌ", "ニコラ"] },
+    "jp_modern": { "female": ["ユイ", "ミオ", "アヤ", "サクラ", "ヒナ", "ナナミ"], "male": ["ハルト", "ソウタ", "ケンジ", "レン", "ダイキ", "ユウマ"] },
+    "cn_modern": { "female": ["欣怡", "雨桐", "梓涵", "詩涵", "佳怡", "婉清"], "male": ["浩然", "子涵", "宇軒", "博文", "俊杰", "明哲"] },
+    "in_modern": { "female": ["アーリヤ", "プリヤ", "アナーニャ", "ディヤー", "ファーティマ", "カヴィヤ"], "male": ["アルジュン", "ロヒト", "アーリヤン", "ヴィハーン", "ラフール", "アーマド"] },
+    "ml_modern": { "female": ["ファトゥマ", "アミナタ", "カディ", "アワ", "ハワ", "マリアム"], "male": ["アダマ", "ママドゥ", "ウスマン", "イブラヒマ", "ムサ", "セクー"] },
+    "fr_modern": { "female": ["ルイーズ", "イネス", "ジュリエット", "エマ", "ルーシー", "カミーユ"], "male": ["ルカ", "ガブリエル", "ジュール", "ノア", "アダム", "ティボー"] }
+  }
+}

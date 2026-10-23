@@ -1,0 +1,1640 @@
+{
+  "schema_version": "0.2",
+  "rules_version": "prototype-0.1",
+  "status": "authoring_templates_not_release_data",
+  "focus_order": [
+    "livelihood",
+    "learning",
+    "relationships",
+    "health"
+  ],
+  "personality_axes": {
+    "judgment": "self_to_harmony",
+    "approach": "cautious_to_try",
+    "change": "familiar_to_exploring",
+    "time": "planned_to_adaptive"
+  },
+  "effect_keys": {
+    "health": "健康",
+    "learning": "学び",
+    "charm": "魅力",
+    "resources": "世帯生活資源の表示値への暫定効果",
+    "happiness": "幸福感",
+    "relationship.closeness": "束縛された対象人物との親密さ",
+    "relationship.trust": "同・信頼",
+    "relationship.tension": "同・緊張"
+  },
+  "eligibility_policy": "全条件を満たすイベントと選択肢のみ。選択肢が2つ未満ならイベントを提示しない。対象人物未解決も除外。",
+  "events": [
+    {
+      "id": "care_routine",
+      "title": "養育の日々",
+      "text_standard": "養育者は、限られた時間をどう使うか考えています。",
+      "text_brief": "養育者は、限られた時間をどう使うか考えています。",
+      "kind": "small",
+      "age_min": 0,
+      "age_max": 5,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "caregiver"
+      ],
+      "choices": [
+        {
+          "id": "rest",
+          "text": "休息と身の回りの世話を優先する",
+          "effects": {
+            "health": 2,
+            "resources": -1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 1,
+            "health": 3
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "together",
+          "text": "一緒に過ごす時間を作る",
+          "effects": {
+            "happiness": 2,
+            "relationship.closeness": 2
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "care_routine"
+    },
+    {
+      "id": "child_curiosity",
+      "title": "身近な不思議",
+      "text_standard": "見慣れないものを見つけました。安全に調べる方法を考えます。",
+      "text_brief": "見慣れないものを見つけました。安全に調べる方法を考えます。",
+      "kind": "small",
+      "age_min": 6,
+      "age_max": 9,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "caregiver"
+      ],
+      "choices": [
+        {
+          "id": "ask",
+          "text": "身近な大人に聞く",
+          "effects": {
+            "learning": 2,
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 1,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "observe",
+          "text": "しばらく観察してみる",
+          "effects": {
+            "learning": 1,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 2,
+            "relationships": 0,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "approach": 1,
+            "change": 1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "child_curiosity"
+    },
+    {
+      "id": "learn_letters",
+      "title": "文字を学ぶ機会",
+      "text_standard": "読み書きを教わる機会があります。",
+      "text_brief": "読み書きを教わる機会があります。",
+      "kind": "small",
+      "age_min": 6,
+      "age_max": 17,
+      "capabilities_all": [
+        "literacy_instruction"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "learn",
+          "text": "学ぶ時間を取る",
+          "effects": {
+            "learning": 3,
+            "resources": -1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 0,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "help",
+          "text": "今は家の仕事を手伝う",
+          "effects": {
+            "resources": 2,
+            "happiness": -1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 0,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "learn_letters"
+    },
+    {
+      "id": "practice_basics",
+      "title": "できることを増やす",
+      "text_standard": "以前教わったことを練習できそうです。",
+      "text_brief": "以前教わったことを練習できそうです。",
+      "kind": "small",
+      "age_min": 8,
+      "age_max": 17,
+      "capabilities_all": [],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "repeat",
+          "text": "同じ手順を繰り返す",
+          "effects": {
+            "learning": 2
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": -1,
+            "time": -1
+          }
+        },
+        {
+          "id": "vary",
+          "text": "違うやり方も試す",
+          "effects": {
+            "learning": 2,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 1,
+          "personality_tags": {
+            "change": 1,
+            "approach": 1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "practice_basics"
+    },
+    {
+      "id": "peer_disagreement",
+      "title": "仲間とのすれ違い",
+      "text_standard": "身近な仲間と意見が合いません。",
+      "text_brief": "身近な仲間と意見が合いません。",
+      "kind": "small",
+      "age_min": 8,
+      "age_max": 17,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "peer"
+      ],
+      "choices": [
+        {
+          "id": "listen",
+          "text": "相手の話を聞く",
+          "effects": {
+            "relationship.trust": 2,
+            "relationship.tension": -2
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {
+            "judgment": 1
+          }
+        },
+        {
+          "id": "explain",
+          "text": "自分の考えを伝える",
+          "effects": {
+            "charm": 1,
+            "relationship.tension": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 1,
+            "relationships": 2,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "judgment": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "peer_disagreement"
+    },
+    {
+      "id": "household_task",
+      "title": "家の用事",
+      "text_standard": "世帯の仕事と自分の時間をどう分けるか考えます。",
+      "text_brief": "世帯の仕事と自分の時間をどう分けるか考えます。",
+      "kind": "small",
+      "age_min": 6,
+      "age_max": 17,
+      "capabilities_all": [
+        "independent_learning"
+      ],
+      "required_person_roles": [
+        "household_member"
+      ],
+      "choices": [
+        {
+          "id": "household",
+          "text": "家の用事を引き受ける",
+          "effects": {
+            "resources": 2,
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 0,
+            "relationships": 2,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "own",
+          "text": "自分の学びに時間を使う",
+          "effects": {
+            "learning": 2,
+            "resources": -1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 0,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "household_task"
+    },
+    {
+      "id": "craft_interest",
+      "title": "手仕事への興味",
+      "text_standard": "身近な作業に興味を持ちました。教わる機会があります。",
+      "text_brief": "身近な作業に興味を持ちました。教わる機会があります。",
+      "kind": "small",
+      "age_min": 10,
+      "age_max": 19,
+      "capabilities_all": [
+        "craft_learning"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "try",
+          "text": "短時間、教わってみる",
+          "effects": {
+            "learning": 2,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": 1
+          }
+        },
+        {
+          "id": "watch",
+          "text": "まず見学してから決める",
+          "effects": {
+            "learning": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 2,
+            "relationships": 0,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "approach": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "craft_interest"
+    },
+    {
+      "id": "school_collaboration",
+      "title": "学びの場での共同作業",
+      "text_standard": "学びの場で、複数人で取り組む課題が出ました。",
+      "text_brief": "学びの場で、複数人で取り組む課題が出ました。",
+      "kind": "small",
+      "age_min": 10,
+      "age_max": 24,
+      "capabilities_all": [
+        "formal_school_enrolled"
+      ],
+      "required_person_roles": [
+        "peer"
+      ],
+      "choices": [
+        {
+          "id": "coordinate",
+          "text": "皆の役割を調整する",
+          "effects": {
+            "charm": 2,
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 2,
+            "relationships": 3,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "judgment": 1,
+            "time": -1
+          }
+        },
+        {
+          "id": "specialize",
+          "text": "得意な部分を担当する",
+          "effects": {
+            "learning": 2,
+            "relationship.closeness": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "school_collaboration"
+    },
+    {
+      "id": "study_preparation",
+      "title": "評価の前の時間",
+      "text_standard": "学びの成果を見てもらう機会が近づいています。",
+      "text_brief": "学びの成果を見てもらう機会が近づいています。",
+      "kind": "small",
+      "age_min": 10,
+      "age_max": 24,
+      "capabilities_all": [
+        "formal_school_enrolled"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "schedule",
+          "text": "復習の計画を立てる",
+          "effects": {
+            "learning": 3,
+            "happiness": -1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 0,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": -1
+          }
+        },
+        {
+          "id": "adapt",
+          "text": "苦手なところを見ながら進める",
+          "effects": {
+            "learning": 2,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 0,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": 1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "study_preparation"
+    },
+    {
+      "id": "mentor_advice",
+      "title": "助言を受けて",
+      "text_standard": "教えてくれる人から、やり方について意見をもらいました。",
+      "text_brief": "教えてくれる人から、やり方について意見をもらいました。",
+      "kind": "small",
+      "age_min": 10,
+      "age_max": 39,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "mentor"
+      ],
+      "choices": [
+        {
+          "id": "follow",
+          "text": "勧められた手順を試す",
+          "effects": {
+            "learning": 2,
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 2,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": -1
+          }
+        },
+        {
+          "id": "discuss",
+          "text": "別の方法を相談する",
+          "effects": {
+            "learning": 2,
+            "charm": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": 1,
+            "judgment": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "mentor_advice"
+    },
+    {
+      "id": "friendship_time",
+      "title": "友人との時間",
+      "text_standard": "友人から一緒に過ごそうと声をかけられました。",
+      "text_brief": "友人から一緒に過ごそうと声をかけられました。",
+      "kind": "small",
+      "age_min": 13,
+      "age_max": 39,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "friend"
+      ],
+      "choices": [
+        {
+          "id": "meet",
+          "text": "時間を作って会う",
+          "effects": {
+            "happiness": 2,
+            "relationship.closeness": 3
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "later",
+          "text": "先の予定を決めて今日は用事を済ませる",
+          "effects": {
+            "resources": 1,
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 2,
+            "learning": 0,
+            "relationships": 1,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "friendship_time"
+    },
+    {
+      "id": "extra_work",
+      "title": "追加の仕事",
+      "text_standard": "条件の分かっている小さな仕事を引き受けられそうです。",
+      "text_brief": "条件の分かっている小さな仕事を引き受けられそうです。",
+      "kind": "small",
+      "age_min": 13,
+      "age_max": 39,
+      "capabilities_all": [
+        "paid_work_available"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "accept",
+          "text": "仕事を引き受ける",
+          "effects": {
+            "resources": 3,
+            "health": -1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 1,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "decline",
+          "text": "今回は休息を取る",
+          "effects": {
+            "health": 2,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 0,
+            "health": 3
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "extra_work"
+    },
+    {
+      "id": "pressure_rest",
+      "title": "疲れを感じる",
+      "text_standard": "このところ、毎日の用事が続いています。",
+      "text_brief": "このところ、毎日の用事が続いています。",
+      "kind": "small",
+      "age_min": 10,
+      "age_max": 39,
+      "capabilities_all": [],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "rest",
+          "text": "予定を減らして休む",
+          "effects": {
+            "health": 3,
+            "resources": -1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 1,
+            "health": 3
+          },
+          "risk": 0,
+          "personality_tags": {
+            "approach": -1
+          }
+        },
+        {
+          "id": "adjust",
+          "text": "用事の順番を変えて負担を減らす",
+          "effects": {
+            "health": 1,
+            "learning": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 1,
+            "relationships": 0,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "pressure_rest"
+    },
+    {
+      "id": "household_budget",
+      "title": "暮らしの配分",
+      "text_standard": "今期の暮らしに使える資源をどう配分するか考えます。",
+      "text_brief": "今期の暮らしに使える資源をどう配分するか考えます。",
+      "kind": "small",
+      "age_min": 18,
+      "age_max": 79,
+      "capabilities_all": [],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "reserve",
+          "text": "先の不足に備える",
+          "effects": {
+            "resources": 2,
+            "happiness": -1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 0,
+            "relationships": 0,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": -1,
+            "approach": -1
+          }
+        },
+        {
+          "id": "comfort",
+          "text": "今の暮らしを少し整える",
+          "effects": {
+            "resources": -2,
+            "happiness": 3
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 2,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": 1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "household_budget"
+    },
+    {
+      "id": "adult_learning",
+      "title": "学び直し",
+      "text_standard": "今の生活に役立ちそうなことを学べます。",
+      "text_brief": "今の生活に役立ちそうなことを学べます。",
+      "kind": "small",
+      "age_min": 20,
+      "age_max": 59,
+      "capabilities_all": [
+        "adult_learning_available"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "learn",
+          "text": "学ぶ時間を確保する",
+          "effects": {
+            "learning": 3,
+            "resources": -1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 3,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": 1
+          }
+        },
+        {
+          "id": "practice",
+          "text": "今ある技能を磨く",
+          "effects": {
+            "learning": 2,
+            "resources": 1
+          },
+          "focus_scores": {
+            "livelihood": 2,
+            "learning": 2,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": -1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "adult_learning"
+    },
+    {
+      "id": "care_responsibility",
+      "title": "支えを必要とする人",
+      "text_standard": "身近な人が日々の支えを必要としています。",
+      "text_brief": "身近な人が日々の支えを必要としています。",
+      "kind": "small",
+      "age_min": 18,
+      "age_max": 79,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "care_recipient"
+      ],
+      "choices": [
+        {
+          "id": "direct",
+          "text": "自分の時間を使って支える",
+          "effects": {
+            "resources": -1,
+            "health": -1,
+            "relationship.trust": 3
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "coordinate",
+          "text": "利用できる協力者と分担を相談する",
+          "effects": {
+            "charm": 1,
+            "relationship.trust": 2
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {},
+          "requires": {
+            "capabilities_all": [
+              "care_support_available"
+            ]
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "care_responsibility"
+    },
+    {
+      "id": "later_sharing",
+      "title": "経験を伝える",
+      "text_standard": "これまでの経験を聞きたいという人がいます。",
+      "text_brief": "これまでの経験を聞きたいという人がいます。",
+      "kind": "small",
+      "age_min": 40,
+      "age_max": 100,
+      "capabilities_all": [],
+      "required_person_roles": [
+        "learner"
+      ],
+      "choices": [
+        {
+          "id": "teach",
+          "text": "時間を取って伝える",
+          "effects": {
+            "happiness": 2,
+            "relationship.trust": 2
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 2,
+            "relationships": 3,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "record",
+          "text": "形にして残す",
+          "effects": {
+            "learning": 1,
+            "happiness": 2
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {},
+          "requires": {
+            "capabilities_all": [
+              "recording_available"
+            ]
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "later_sharing"
+    },
+    {
+      "id": "later_daily_life",
+      "title": "これからの日々",
+      "text_standard": "今の体調と暮らしに合わせて過ごし方を考えます。",
+      "text_brief": "今の体調と暮らしに合わせて過ごし方を考えます。",
+      "kind": "small",
+      "age_min": 40,
+      "age_max": 110,
+      "capabilities_all": [],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "pace",
+          "text": "無理のない日課を整える",
+          "effects": {
+            "health": 2,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 1,
+            "health": 3
+          },
+          "risk": 0,
+          "personality_tags": {
+            "time": -1
+          }
+        },
+        {
+          "id": "new",
+          "text": "可能な範囲で新しい楽しみを探す",
+          "effects": {
+            "happiness": 2,
+            "learning": 1
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 2,
+            "relationships": 1,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {
+            "change": 1,
+            "approach": 1
+          }
+        }
+      ],
+      "cooldown_quarters": 8,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "outcome_contract_id": "later_daily_life"
+    },
+    {
+      "id": "education_transition",
+      "title": "次の学びへ",
+      "text_standard": "進学できる条件が整い、次の学びについて決める時期です。",
+      "text_brief": "進学できる条件が整い、次の学びについて決める時期です。",
+      "kind": "major",
+      "age_min": 12,
+      "age_max": 25,
+      "capabilities_all": [
+        "education_offer"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "enroll",
+          "text": "進学を選ぶ",
+          "effects": {
+            "learning": 4,
+            "resources": -3
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "work",
+          "text": "利用できる仕事の道へ進む",
+          "effects": {
+            "resources": 3,
+            "learning": 1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 1,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {},
+          "requires": {
+            "capabilities_all": [
+              "paid_work_available"
+            ]
+          }
+        },
+        {
+          "id": "defer",
+          "text": "今は進学を見送り、選び直す",
+          "effects": {
+            "happiness": -1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 1,
+            "relationships": 1,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "education_transition",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    },
+    {
+      "id": "apprenticeship_offer",
+      "title": "修業への誘い",
+      "text_standard": "条件の示された修業の話が来ています。",
+      "text_brief": "条件の示された修業の話が来ています。",
+      "kind": "major",
+      "age_min": 10,
+      "age_max": 25,
+      "capabilities_all": [
+        "apprenticeship_offer"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "accept",
+          "text": "条件を確かめて修業を始める",
+          "effects": {
+            "learning": 4,
+            "resources": -2
+          },
+          "focus_scores": {
+            "livelihood": 2,
+            "learning": 3,
+            "relationships": 1,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "decline",
+          "text": "今の暮らしを続ける",
+          "effects": {
+            "resources": 1
+          },
+          "focus_scores": {
+            "livelihood": 2,
+            "learning": 0,
+            "relationships": 1,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "apprenticeship_offer",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    },
+    {
+      "id": "job_offer",
+      "title": "仕事の選択",
+      "text_standard": "実行可能な新しい仕事の話があります。",
+      "text_brief": "実行可能な新しい仕事の話があります。",
+      "kind": "major",
+      "age_min": 15,
+      "age_max": 39,
+      "capabilities_all": [
+        "job_offer"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "accept",
+          "text": "条件を確かめて引き受ける",
+          "effects": {
+            "resources": 4,
+            "health": -1
+          },
+          "focus_scores": {
+            "livelihood": 3,
+            "learning": 2,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 0,
+          "personality_tags": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "stay",
+          "text": "今の活動を続ける",
+          "effects": {
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 1,
+            "relationships": 2,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "job_offer",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    },
+    {
+      "id": "migration_offer",
+      "title": "別の土地で暮らす道",
+      "text_standard": "移動先と手段の見通しが立ちました。移住を考えます。",
+      "text_brief": "移動先と手段の見通しが立ちました。移住を考えます。",
+      "kind": "major",
+      "age_min": 16,
+      "age_max": 65,
+      "capabilities_all": [
+        "migration_offer"
+      ],
+      "required_person_roles": [
+        "household_member"
+      ],
+      "choices": [
+        {
+          "id": "move",
+          "text": "移住の準備を始める",
+          "effects": {
+            "resources": -3,
+            "learning": 2,
+            "happiness": -1
+          },
+          "focus_scores": {
+            "livelihood": 2,
+            "learning": 2,
+            "relationships": 0,
+            "health": 0
+          },
+          "risk": 2,
+          "personality_tags": {
+            "change": 1,
+            "approach": 1
+          }
+        },
+        {
+          "id": "stay",
+          "text": "今の土地で暮らしを続ける",
+          "effects": {
+            "relationship.closeness": 2
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "migration_offer",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    },
+    {
+      "id": "partnership_decision",
+      "title": "共に暮らす相談",
+      "text_standard": "互いの意思を確かめた相手と、今後の暮らしを相談します。",
+      "text_brief": "互いの意思を確かめた相手と、今後の暮らしを相談します。",
+      "kind": "major",
+      "age_min": 18,
+      "age_max": 65,
+      "capabilities_all": [
+        "mutual_partnership_offer"
+      ],
+      "required_person_roles": [
+        "partner"
+      ],
+      "choices": [
+        {
+          "id": "together",
+          "text": "その社会で可能な形で共同生活を選ぶ",
+          "effects": {
+            "happiness": 3,
+            "resources": -1,
+            "relationship.trust": 3
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 3,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "wait",
+          "text": "今は別々に暮らしながら関係を続ける",
+          "effects": {
+            "relationship.trust": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 2,
+            "health": 1
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "partnership_decision",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    },
+    {
+      "id": "treatment_decision",
+      "title": "療養の選択",
+      "text_standard": "利用できる療養方法と負担について説明を受けました。",
+      "text_brief": "利用できる療養方法と負担について説明を受けました。",
+      "kind": "major",
+      "age_min": 0,
+      "age_max": 110,
+      "capabilities_all": [
+        "treatment_options_available"
+      ],
+      "required_person_roles": [],
+      "choices": [
+        {
+          "id": "care",
+          "text": "提示された療養を選ぶ",
+          "effects": {
+            "resources": -3,
+            "health": 2
+          },
+          "focus_scores": {
+            "livelihood": 0,
+            "learning": 0,
+            "relationships": 1,
+            "health": 3
+          },
+          "risk": 0,
+          "personality_tags": {}
+        },
+        {
+          "id": "support",
+          "text": "利用できる日常の支えを中心にする",
+          "effects": {
+            "resources": -1,
+            "happiness": 1
+          },
+          "focus_scores": {
+            "livelihood": 1,
+            "learning": 0,
+            "relationships": 2,
+            "health": 2
+          },
+          "risk": 0,
+          "personality_tags": {}
+        }
+      ],
+      "cooldown_quarters": null,
+      "max_occurrences": null,
+      "origin": "game_authored",
+      "source_ids": [],
+      "content_tags": [],
+      "historical_claim": false,
+      "state": "context_and_outcome_contracts_authored",
+      "binding_required": [
+        "scenario_opportunity_data",
+        "target_person_resolution",
+        "institutional_source_review",
+        "engine_implementation"
+      ],
+      "personality_owner": "protagonist_if_age_6_or_above",
+      "effects_status": "game_tuning_not_measured",
+      "implementation_note": "結果と後日談はevent-outcomes.jsonで定義。機会・病状モデルのデータと実行処理を結び付けてから有効化する。",
+      "outcome_contract_id": "treatment_decision",
+      "occurrence_scope": "offer_id_or_illness_episode_id"
+    }
+  ],
+  "binding_file": "scenario-bindings.json",
+  "outcome_file": "event-outcomes.json",
+  "execution_contract": "条件・数値・状態遷移はevent-outcomes.jsonとscenario-bindings.jsonを併読。結果のreplace指定を優先する。"
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "0.1",
+  "status": "editor_birth_preview_only",
+  "not_public_birth_distribution": true,
+  "applies_to_scenario_ids": [
+    "jp_historical",
+    "cn_historical",
+    "in_historical",
+    "ml_historical",
+    "fr_historical",
+    "jp_modern",
+    "cn_modern",
+    "in_modern",
+    "ml_modern",
+    "fr_modern"
+  ],
+  "evidence_tier": "game_authored_tuning_prior",
+  "rationale": "編集用プレビューで4種類の生活資源の境遇を均衡よく確認する。史料上の人口比・出生比ではない。",
+  "sampling_policy": {
+    "scenario_selection": "Select the birth year first, then one of eight broad world regions. No historical/modern era bucket is selected as a life phase. The broad-region weights are authored game-balance weights, not empirical population shares.",
+    "year_selection": "Uniform across the rolling 2,000-calendar-year window for editor preview (27-2026 when reference year is 2026); not a historical birth-year distribution.",
+    "resource_and_archetype_independence": "Assumed for preview only. Replace with conditional estimates when source data allow.",
+    "birth_status_distribution": "The listed archetype weights are authoring priors for narrative variety, except where a source note says they borrow a household-level pattern. They are not observed shares of births."
+  },
+  "resource_band_weights": {
+    "shortage": 0.15,
+    "precarious": 0.35,
+    "stable": 0.35,
+    "comfortable": 0.15
+  },
+  "resource_band_display_values": {
+    "shortage": 20,
+    "precarious": 35,
+    "stable": 55,
+    "comfortable": 75
+  },
+  "household_archetype_priors": {
+    "jp_historical": {
+      "basis": "game_estimate_with_local_household_class_reference",
+      "source_note": "A combined early-period household-class distribution for two Nihonmatsu villages is 74.8% titled peasant, 23.2% mizunomi, 2.1% other, excluding unknowns. The 75/23/2 authoring prior borrows this household pattern as a loose reference only; it does not estimate Niita births and does not cover 1720-1870 uniformly.",
+      "weights": {
+        "landholding_farm_household": 0.75,
+        "land_poor_or_tenant_farm_household": 0.23,
+        "other_village_livelihood": 0.02
+      },
+      "confidence": "low; apply sensitivity range of ±15 percentage points to the landholding share"
+    },
+    "cn_historical": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "craft_or_trade_household": 0.35,
+        "shop_or_service_household": 0.25,
+        "teacher_or_scholarly_household": 0.15,
+        "other_urban_household": 0.25
+      },
+      "confidence": "very low; not a population estimate"
+    },
+    "in_historical": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "artisan_or_merchant_household": 0.35,
+        "service_or_working_household": 0.3,
+        "state_or_elite_linked_household": 0.15,
+        "other_city_household": 0.2
+      },
+      "confidence": "very low; not a population estimate"
+    },
+    "ml_historical": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "trade_household": 0.3,
+        "scholar_or_scribe_household": 0.2,
+        "craft_or_transport_household": 0.25,
+        "other_town_household": 0.25
+      },
+      "confidence": "very low; not a population estimate"
+    },
+    "fr_historical": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "artisan_or_apprentice_household": 0.35,
+        "merchant_or_shop_household": 0.2,
+        "service_or_wage_household": 0.25,
+        "other_town_household": 0.2
+      },
+      "confidence": "very low; not a population estimate"
+    },
+    "jp_modern": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "salaried_household": 0.45,
+        "self_employed_or_shop_household": 0.15,
+        "public_or_care_work_household": 0.15,
+        "other_household": 0.25
+      },
+      "confidence": "very low; replace with local census and labor data"
+    },
+    "cn_modern": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "salaried_household": 0.45,
+        "business_or_shop_household": 0.2,
+        "public_or_care_work_household": 0.15,
+        "other_household": 0.2
+      },
+      "confidence": "very low; replace with local census and labor data"
+    },
+    "in_modern": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "office_or_salaried_household": 0.3,
+        "self_employed_or_shop_household": 0.25,
+        "industry_or_service_wage_household": 0.25,
+        "other_household": 0.2
+      },
+      "confidence": "very low; replace with local census and labor data"
+    },
+    "ml_modern": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "agriculture_or_trade_household": 0.35,
+        "public_education_or_care_household": 0.15,
+        "wage_or_service_household": 0.2,
+        "other_household": 0.3
+      },
+      "confidence": "very low; replace with local census and labor data"
+    },
+    "fr_modern": {
+      "basis": "game_authored_story_mix",
+      "weights": {
+        "salaried_household": 0.45,
+        "public_or_professional_household": 0.2,
+        "self_employed_or_shop_household": 0.15,
+        "other_household": 0.2
+      },
+      "confidence": "very low; replace with local census and labor data"
+    }
+  },
+  "unresolved_release_fields": [
+    "birth_year_window",
+    "year_weights",
+    "location_id",
+    "sampling_population_definition",
+    "household_strata",
+    "birth_status_weights",
+    "household_structure_weights",
+    "sex_or_gender_generation_policy",
+    "source_license_status"
+  ],
+  "display_label": "仮の境遇抽選（史実の人口比ではありません）",
+  "scope_note": "This preview file supplies household narrative priors only for the ten deep-dive birth scenes. For global year and region sampling, see global-birth-sampling.json."
+}
