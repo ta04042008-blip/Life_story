@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.1",
+  "status": "implementation_authored_mapping",
+  "evidence_tier": "game_hypothesis",
+  "purpose": "Implementation-side glue between the spec's ten deep-dive scenarios and the engine: which country series, settlement profile, name pool and learning environment each one uses. Every value is an authoring choice for the game, not a measured fact.",
+  "scenarios": {
+    "jp_historical": { "macro_region": "east_asia", "country_series": "jp_modern", "settlement_profile": "rural_or_village", "mortality_profile": "rural_agrarian", "name_pool": "jp_historical", "modern_pair": "jp_modern", "location_label": "仁井田村（二本松藩）", "location_id": "jp:niita", "learning_kinds": ["household", "community"], "school_like_institutions": false },
+    "cn_historical": { "macro_region": "east_asia", "country_series": "cn_modern", "settlement_profile": "urban_or_city", "mortality_profile": "urban_trade", "name_pool": "cn_historical", "modern_pair": "cn_modern", "location_label": "蘇州の府城と周辺市鎮", "location_id": "cn:suzhou", "learning_kinds": ["household", "community", "master"], "school_like_institutions": true },
+    "in_historical": { "macro_region": "south_asia", "country_series": "in_modern", "settlement_profile": "urban_or_city", "mortality_profile": "urban_trade", "name_pool": "in_historical", "modern_pair": "in_modern", "location_label": "アグラ市街と近郊", "location_id": "in:agra", "learning_kinds": ["household", "community", "master"], "school_like_institutions": true },
+    "ml_historical": { "macro_region": "sub_saharan_africa", "country_series": "ml_modern", "settlement_profile": "town_or_market_center", "mortality_profile": "urban_trade", "name_pool": "ml_historical", "modern_pair": "ml_modern", "location_label": "トンブクトゥの町", "location_id": "ml:timbuktu", "learning_kinds": ["household", "community", "master"], "school_like_institutions": true },
+    "fr_historical": { "macro_region": "europe", "country_series": "fr_modern", "settlement_profile": "town_or_market_center", "mortality_profile": "urban_trade", "name_pool": "fr_historical", "modern_pair": "fr_modern", "location_label": "ディジョンの町", "location_id": "fr:dijon", "learning_kinds": ["household", "community", "master"], "school_like_institutions": true },
+    "jp_modern": { "macro_region": "east_asia", "country_series": "jp_modern", "settlement_profile": "town_or_market_center", "mortality_profile": null, "name_pool": "jp_modern", "modern_pair": null, "location_label": "二本松市", "location_id": "jp:nihonmatsu", "learning_kinds": ["household", "community", "school"], "school_like_institutions": true },
+    "cn_modern": { "macro_region": "east_asia", "country_series": "cn_modern", "settlement_profile": "urban_or_city", "mortality_profile": null, "name_pool": "cn_modern", "modern_pair": null, "location_label": "蘇州市", "location_id": "cn:suzhou-city", "learning_kinds": ["household", "community", "school"], "school_like_institutions": true },
+    "in_modern": { "macro_region": "south_asia", "country_series": "in_modern", "settlement_profile": "urban_or_city", "mortality_profile": null, "name_pool": "in_modern", "modern_pair": null, "location_label": "アグラ市", "location_id": "in:agra-city", "learning_kinds": ["household", "community", "school"], "school_like_institutions": true },
+    "ml_modern": { "macro_region": "sub_saharan_africa", "country_series": "ml_modern", "settlement_profile": "town_or_market_center", "mortality_profile": null, "name_pool": "ml_modern", "modern_pair": null, "location_label": "トンブクトゥ市街", "location_id": "ml:timbuktu-city", "learning_kinds": ["household", "community", "school"], "school_like_institutions": true },
+    "fr_modern": { "macro_region": "europe", "country_series": "fr_modern", "settlement_profile": "urban_or_city", "mortality_profile": null, "name_pool": "fr_modern", "modern_pair": null, "location_label": "ディジョン市", "location_id": "fr:dijon-city", "learning_kinds": ["household", "community", "school"], "school_like_institutions": true }
+  },
+  "settlement_profile_for_generic_labels": {
+    "urban_or_city": "都市の暮らし",
+    "town_or_market_center": "町・市場町の暮らし",
+    "rural_or_village": "村の暮らし",
+    "mobile_or_seasonal_livelihood": "移動や季節に合わせた暮らし"
+  },
+  "mortality_profile_for_settlement": {
+    "urban_or_city": "urban_trade",
+    "town_or_market_center": "urban_trade",
+    "rural_or_village": "rural_agrarian",
+    "mobile_or_seasonal_livelihood": "rural_agrarian"
+  },
+  "generic_modern_mortality_anchor": {
+    "policy": "For places without a country series (1950 onward) the game uses a labelled blend. east_asia, south_asia, sub_saharan_africa and europe borrow the nearest authored anchor series; the remaining four regions use the logit-average of all five anchors. This is a GAME ESTIMATE shown as such on the data screen.",
+    "east_asia": ["jp_modern", "cn_modern"],
+    "south_asia": ["in_modern"],
+    "sub_saharan_africa": ["ml_modern"],
+    "europe": ["fr_modern"],
+    "southeast_asia": ["jp_modern", "cn_modern", "in_modern", "ml_modern", "fr_modern"],
+    "west_and_central_asia_north_africa": ["jp_modern", "cn_modern", "in_modern", "ml_modern", "fr_modern"],
+    "americas": ["jp_modern", "cn_modern", "in_modern", "ml_modern", "fr_modern"],
+    "oceania": ["jp_modern", "cn_modern", "in_modern", "ml_modern", "fr_modern"]
+  }
+}

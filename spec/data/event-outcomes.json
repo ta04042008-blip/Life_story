@@ -1,0 +1,1890 @@
+{
+  "schema_version": "0.1",
+  "status": "transition_specification_not_engine_implementation",
+  "operations_contract": {
+    "set": "指定先へ値を代入",
+    "append": "履歴へ追加",
+    "consume": "機会IDを使用済みにする",
+    "ensure_relationship": "既存関係があれば維持し、なければテンプレートから作成",
+    "schedule": "一意の予定IDで処理予約",
+    "end": "置換対象の旧契約を終了",
+    "apply_household_plan": "世帯構成と実資源を一括移管"
+  },
+  "execution_order": [
+    "決断表示時に対象人物・機会・候補を固定して保存",
+    "回答時に機会が有効か再確認し無効なら再提示",
+    "同じ回答識別子が処理済みなら何もしない",
+    "数値効果・状態遷移・予定・履歴を同じ処理単位で確定",
+    "成功した処理だけ保存し次の処理へ進む"
+  ],
+  "effect_override_policy": "replace_template_onceなら元の数値効果を加算しない。それ以外は継承した効果を一度だけ適用。",
+  "recurrence_policy": "日常はクールダウン後に再登場可。決断はevent_id単位の一生1回ではなくoffer_idまたはillness_episode_idごとに1回。",
+  "followup_policy": "後日談には一意IDと元決断IDを付ける。途中で死別・中断した場合は条件を再確認し、事実に合う記録にする。",
+  "contracts": [
+    {
+      "event_id": "care_routine",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "rest",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "care_routine",
+                "choice_id": "rest",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「休息と身の回りの世話を優先する」を選んだ。",
+          "followups": [
+            {
+              "id": "care_routine_rest_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "養育者が取った時間の配分と、その後の暮らしを振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "together",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "care_routine",
+                "choice_id": "together",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「一緒に過ごす時間を作る」を選んだ。",
+          "followups": [
+            {
+              "id": "care_routine_together_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "養育者が取った時間の配分と、その後の暮らしを振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "child_curiosity",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "ask",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "child_curiosity",
+                "choice_id": "ask",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「身近な大人に聞く」を選んだ。",
+          "followups": [
+            {
+              "id": "child_curiosity_ask_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "あのとき気になったことについて、分かったことを思い返します。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "observe",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "child_curiosity",
+                "choice_id": "observe",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「しばらく観察してみる」を選んだ。",
+          "followups": [
+            {
+              "id": "child_curiosity_observe_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "あのとき気になったことについて、分かったことを思い返します。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "learn_letters",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "learn",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "learn_letters",
+                "choice_id": "learn",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「学ぶ時間を取る」を選んだ。",
+          "followups": [
+            {
+              "id": "learn_letters_learn_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "学ぶ時間と家の用事を、今も両立できているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "help",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "learn_letters",
+                "choice_id": "help",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「今は家の仕事を手伝う」を選んだ。",
+          "followups": [
+            {
+              "id": "learn_letters_help_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "学ぶ時間と家の用事を、今も両立できているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "practice_basics",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "repeat",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "practice_basics",
+                "choice_id": "repeat",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「同じ手順を繰り返す」を選んだ。",
+          "followups": [
+            {
+              "id": "practice_basics_repeat_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "繰り返したこと、試したことが、今の手順にどう残っているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "vary",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "practice_basics",
+                "choice_id": "vary",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「違うやり方も試す」を選んだ。",
+          "followups": [
+            {
+              "id": "practice_basics_vary_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "繰り返したこと、試したことが、今の手順にどう残っているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "peer_disagreement",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "listen",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "peer_disagreement",
+                "choice_id": "listen",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「相手の話を聞く」を選んだ。",
+          "followups": [
+            {
+              "id": "peer_disagreement_listen_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "意見が食い違った仲間と、その後どのように接しているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "explain",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "peer_disagreement",
+                "choice_id": "explain",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「自分の考えを伝える」を選んだ。",
+          "followups": [
+            {
+              "id": "peer_disagreement_explain_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "意見が食い違った仲間と、その後どのように接しているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "household_task",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "household",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "household_task",
+                "choice_id": "household",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「家の用事を引き受ける」を選んだ。",
+          "followups": [
+            {
+              "id": "household_task_household_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "家の用事と自分の時間の配分が、その後の暮らしにどう響いたか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "own",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "household_task",
+                "choice_id": "own",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「自分の学びに時間を使う」を選んだ。",
+          "followups": [
+            {
+              "id": "household_task_own_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "家の用事と自分の時間の配分が、その後の暮らしにどう響いたか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "craft_interest",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "try",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "craft_interest",
+                "choice_id": "try",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「短時間、教わってみる」を選んだ。",
+          "followups": [
+            {
+              "id": "craft_interest_try_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "見たり教わったりした作業に、今も興味があるか思い返します。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "watch",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "craft_interest",
+                "choice_id": "watch",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「まず見学してから決める」を選んだ。",
+          "followups": [
+            {
+              "id": "craft_interest_watch_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "見たり教わったりした作業に、今も興味があるか思い返します。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "school_collaboration",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "coordinate",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "school_collaboration",
+                "choice_id": "coordinate",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「皆の役割を調整する」を選んだ。",
+          "followups": [
+            {
+              "id": "school_collaboration_coordinate_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "共同で取り組んだ課題と、仲間との関係を振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "specialize",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "school_collaboration",
+                "choice_id": "specialize",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「得意な部分を担当する」を選んだ。",
+          "followups": [
+            {
+              "id": "school_collaboration_specialize_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "共同で取り組んだ課題と、仲間との関係を振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "study_preparation",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "schedule",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "study_preparation",
+                "choice_id": "schedule",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「復習の計画を立てる」を選んだ。",
+          "followups": [
+            {
+              "id": "study_preparation_schedule_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "準備の方法を振り返ります。実際の評価結果は、別の評価イベントで決まります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "adapt",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "study_preparation",
+                "choice_id": "adapt",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「苦手なところを見ながら進める」を選んだ。",
+          "followups": [
+            {
+              "id": "study_preparation_adapt_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "準備の方法を振り返ります。実際の評価結果は、別の評価イベントで決まります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "mentor_advice",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "follow",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "mentor_advice",
+                "choice_id": "follow",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「勧められた手順を試す」を選んだ。",
+          "followups": [
+            {
+              "id": "mentor_advice_follow_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "助言を受けた後の取り組み方を、教えてくれた人とのやり取りとともに振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "discuss",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "mentor_advice",
+                "choice_id": "discuss",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「別の方法を相談する」を選んだ。",
+          "followups": [
+            {
+              "id": "mentor_advice_discuss_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "助言を受けた後の取り組み方を、教えてくれた人とのやり取りとともに振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "friendship_time",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "meet",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "friendship_time",
+                "choice_id": "meet",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「時間を作って会う」を選んだ。",
+          "followups": [
+            {
+              "id": "friendship_time_meet_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "以前の約束と、友人との最近の関わりを振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "later",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "friendship_time",
+                "choice_id": "later",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「先の予定を決めて今日は用事を済ませる」を選んだ。",
+          "followups": [
+            {
+              "id": "friendship_time_later_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "以前の約束と、友人との最近の関わりを振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "extra_work",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "accept",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "extra_work",
+                "choice_id": "accept",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「仕事を引き受ける」を選んだ。",
+          "followups": [
+            {
+              "id": "extra_work_accept_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "仕事や休息に使った時間が、今の暮らしにどう響いたか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "decline",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "extra_work",
+                "choice_id": "decline",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「今回は休息を取る」を選んだ。",
+          "followups": [
+            {
+              "id": "extra_work_decline_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "仕事や休息に使った時間が、今の暮らしにどう響いたか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "pressure_rest",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "rest",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "pressure_rest",
+                "choice_id": "rest",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「予定を減らして休む」を選んだ。",
+          "followups": [
+            {
+              "id": "pressure_rest_rest_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "予定を調整した後の体調や負担を確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "adjust",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "pressure_rest",
+                "choice_id": "adjust",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「用事の順番を変えて負担を減らす」を選んだ。",
+          "followups": [
+            {
+              "id": "pressure_rest_adjust_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "予定を調整した後の体調や負担を確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "household_budget",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "reserve",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "household_budget",
+                "choice_id": "reserve",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「先の不足に備える」を選んだ。",
+          "followups": [
+            {
+              "id": "household_budget_reserve_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "今の暮らしを整えることと先への備え、その配分を振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "comfort",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "household_budget",
+                "choice_id": "comfort",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「今の暮らしを少し整える」を選んだ。",
+          "followups": [
+            {
+              "id": "household_budget_comfort_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "今の暮らしを整えることと先への備え、その配分を振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "adult_learning",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "learn",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "adult_learning",
+                "choice_id": "learn",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「学ぶ時間を確保する」を選んだ。",
+          "followups": [
+            {
+              "id": "adult_learning_learn_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "学んだことや磨いた技能を、今どこで使えているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "practice",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "adult_learning",
+                "choice_id": "practice",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「今ある技能を磨く」を選んだ。",
+          "followups": [
+            {
+              "id": "adult_learning_practice_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "学んだことや磨いた技能を、今どこで使えているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "care_responsibility",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "direct",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "care_responsibility",
+                "choice_id": "direct",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「自分の時間を使って支える」を選んだ。",
+          "followups": [
+            {
+              "id": "care_responsibility_direct_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "支える相手の今の状況と、自分や協力者の負担を確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "coordinate",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "care_responsibility",
+                "choice_id": "coordinate",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「利用できる協力者と分担を相談する」を選んだ。",
+          "followups": [
+            {
+              "id": "care_responsibility_coordinate_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "支える相手の今の状況と、自分や協力者の負担を確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "later_sharing",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "teach",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "later_sharing",
+                "choice_id": "teach",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「時間を取って伝える」を選んだ。",
+          "followups": [
+            {
+              "id": "later_sharing_teach_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "伝えたり残したりした経験が、その後どのように受け取られているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "record",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "later_sharing",
+                "choice_id": "record",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「形にして残す」を選んだ。",
+          "followups": [
+            {
+              "id": "later_sharing_record_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "伝えたり残したりした経験が、その後どのように受け取られているか確かめます。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "later_daily_life",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "pace",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "later_daily_life",
+                "choice_id": "pace",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「無理のない日課を整える」を選んだ。",
+          "followups": [
+            {
+              "id": "later_daily_life_pace_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "選んだ過ごし方が今の体調や暮らしに合っているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        },
+        {
+          "choice_id": "new",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "append",
+              "path": "activity_traces",
+              "value": {
+                "event_id": "later_daily_life",
+                "choice_id": "new",
+                "decision_id": "$decision.id",
+                "quarter": "$clock.index"
+              }
+            }
+          ],
+          "immediate_log": "「可能な範囲で新しい楽しみを探す」を選んだ。",
+          "followups": [
+            {
+              "id": "later_daily_life_new_reflection",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "選んだ過ごし方が今の体調や暮らしに合っているか振り返ります。",
+              "narration_policy": "実際の状態と履歴を挿入する。成功・回復・和解を事実確認なしに断定しない。",
+              "numeric_effects": {},
+              "target_unavailable": "対象が死別・離別していたら現在の交流とせず過去の記録として短く振り返る。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "education_transition",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "offer.education.valid",
+        "offer.education.institution_id_exists",
+        "offer.education.costs_affordable",
+        "offer.education.start_and_duration_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "enroll",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.education",
+              "value": {
+                "institution_id": "$offer.education.institution_id",
+                "status": "enrolled",
+                "start_quarter": "$offer.education.start_quarter",
+                "duration_quarters": "$offer.education.duration_quarters"
+              }
+            },
+            {
+              "op": "consume",
+              "path": "offers.education",
+              "value": "$offer.education.id"
+            }
+          ],
+          "immediate_log": "「進学を選ぶ」を選んだ。",
+          "followups": [
+            {
+              "id": "education_adjustment",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_same_education_active",
+              "text": "学びの場に入った後の生活、負担、仲間との関わりを確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        },
+        {
+          "choice_id": "work",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.work",
+              "value": {
+                "job_id": "$offer.work.job_id",
+                "status": "active",
+                "contract_id": "$offer.work.contract_id"
+              }
+            },
+            {
+              "op": "consume",
+              "path": "offers.work",
+              "value": "$offer.work.id"
+            },
+            {
+              "op": "set",
+              "path": "protagonist.education.status",
+              "value": "not_enrolled"
+            }
+          ],
+          "immediate_log": "「利用できる仕事の道へ進む」を選んだ。",
+          "followups": [
+            {
+              "id": "education_to_work",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_same_job_active",
+              "text": "仕事を始めた後の暮らしと、残された学びの道を振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ],
+          "preconditions": [
+            "offer.work.valid",
+            "offer.work.costs_affordable"
+          ]
+        },
+        {
+          "choice_id": "defer",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.education.status",
+              "value": "deferred"
+            }
+          ],
+          "immediate_log": "「今は進学を見送り、選び直す」を選んだ。",
+          "followups": [
+            {
+              "id": "education_reconsider",
+              "delay_quarters": 4,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "見送った学びについて、新たな機会があるか確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "apprenticeship_offer",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "offer.apprenticeship.valid",
+        "offer.apprenticeship.mentor_alive",
+        "offer.apprenticeship.terms_known",
+        "offer.apprenticeship.costs_affordable"
+      ],
+      "choices": [
+        {
+          "choice_id": "accept",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.apprenticeship",
+              "value": {
+                "contract_id": "$offer.apprenticeship.contract_id",
+                "skill_id": "$offer.apprenticeship.skill_id",
+                "mentor_id": "$offer.apprenticeship.mentor_id",
+                "start_quarter": "$clock.index",
+                "duration_quarters": "$offer.apprenticeship.duration_quarters",
+                "status": "active"
+              }
+            },
+            {
+              "op": "ensure_relationship",
+              "path": "relationships",
+              "value": {
+                "target_id": "$offer.apprenticeship.mentor_id",
+                "role": "mentor",
+                "initial_values": "$scenario.mentor_relationship_template"
+              }
+            },
+            {
+              "op": "consume",
+              "path": "offers.apprenticeship",
+              "value": "$offer.apprenticeship.id"
+            }
+          ],
+          "immediate_log": "「条件を確かめて修業を始める」を選んだ。",
+          "followups": [
+            {
+              "id": "apprenticeship_progress",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_same_apprenticeship_active",
+              "text": "修業で学べていること、負担、教えてくれる人との関係を確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        },
+        {
+          "choice_id": "decline",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [],
+          "immediate_log": "「今の暮らしを続ける」を選んだ。",
+          "followups": [
+            {
+              "id": "apprenticeship_alternative",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "今の暮らしを続けた後、別の学びや生業の機会を振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "job_offer",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "offer.work.valid",
+        "offer.work.contract_known",
+        "offer.work.costs_affordable",
+        "offer.work.prerequisites_met"
+      ],
+      "choices": [
+        {
+          "choice_id": "accept",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "end",
+              "path": "protagonist.work.current_contract",
+              "value": "replace_only_after_new_contract_commits"
+            },
+            {
+              "op": "set",
+              "path": "protagonist.work",
+              "value": {
+                "job_id": "$offer.work.job_id",
+                "contract_id": "$offer.work.contract_id",
+                "status": "active",
+                "start_quarter": "$clock.index"
+              }
+            },
+            {
+              "op": "consume",
+              "path": "offers.work",
+              "value": "$offer.work.id"
+            }
+          ],
+          "immediate_log": "「条件を確かめて引き受ける」を選んだ。",
+          "followups": [
+            {
+              "id": "job_adjustment",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_same_job_active",
+              "text": "新しい仕事の収入、負担、実際の働き方を確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        },
+        {
+          "choice_id": "stay",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [],
+          "immediate_log": "「今の活動を続ける」を選んだ。",
+          "followups": [
+            {
+              "id": "job_staying",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "続けている活動と、その後の暮らしを振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "migration_offer",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "offer.migration.destination_exists",
+        "offer.migration.travel_route_valid",
+        "offer.migration.travel_quarters_positive",
+        "offer.migration.housing_available",
+        "offer.migration.costs_affordable",
+        "not_already_travelling"
+      ],
+      "choices": [
+        {
+          "choice_id": "move",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.travel",
+              "value": {
+                "offer_id": "$offer.migration.id",
+                "origin": "$protagonist.location_id",
+                "destination": "$offer.migration.destination_id",
+                "status": "preparing",
+                "departure_quarter": "$clock.index+1",
+                "travel_quarters": "$offer.migration.travel_quarters"
+              }
+            },
+            {
+              "op": "schedule",
+              "path": "world_tasks",
+              "value": {
+                "task": "travel_departure",
+                "at": "$clock.index+1",
+                "cancel_if": "protagonist_dead_or_offer_invalid"
+              }
+            },
+            {
+              "op": "consume",
+              "path": "offers.migration",
+              "value": "$offer.migration.id"
+            }
+          ],
+          "immediate_log": "「移住の準備を始める」を選んだ。",
+          "followups": [
+            {
+              "id": "migration_arrival_review",
+              "delay_quarters": "$offer.migration.travel_quarters+2",
+              "type": "record",
+              "condition": "protagonist_alive_and_arrived_at_destination",
+              "text": "移住先の住まい、人とのつながり、生業の見通しを振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ],
+          "scheduled_lifecycle": {
+            "departure": "出発時にtravel.statusをin_transitへ。所在地は移動中として扱う。到着日時を確定する。",
+            "arrival": "生存し行路が有効ならlocation_idと住居を更新しtravel.statusをarrivedへ。同行者と世帯の変更は移住契約に沿って処理する。",
+            "interruption": "予定外の不通等は別の決断を提示。出発費用や移動結果を二重適用しない。"
+          }
+        },
+        {
+          "choice_id": "stay",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [],
+          "immediate_log": "「今の土地で暮らしを続ける」を選んだ。",
+          "followups": [
+            {
+              "id": "migration_staying",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "今の土地で暮らしを続けた後、仕事や人との関係を振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "partnership_decision",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "offer.partnership.partner_alive",
+        "offer.partnership.mutual_consent",
+        "offer.partnership.allowed_arrangement",
+        "offer.partnership.housing_and_household_plan_valid"
+      ],
+      "choices": [
+        {
+          "choice_id": "together",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "relationships.$partner_id.partnership_status",
+              "value": "cohabiting"
+            },
+            {
+              "op": "apply_household_plan",
+              "path": "households",
+              "value": "$offer.partnership.household_plan"
+            },
+            {
+              "op": "consume",
+              "path": "offers.partnership",
+              "value": "$offer.partnership.id"
+            }
+          ],
+          "immediate_log": "「その社会で可能な形で共同生活を選ぶ」を選んだ。",
+          "followups": [
+            {
+              "id": "partnership_life",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_same_partnership_active",
+              "text": "共に暮らして分かったことと、生活の分担を振り返ります。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ],
+          "implementation_note": "世帯の実資源と生活必要量を契約に従って移管する。0〜100の表示値同士を加算しない。世帯IDと共有資源の所有参照を同じ処理で更新する。"
+        },
+        {
+          "choice_id": "wait",
+          "numeric_effects": {
+            "mode": "inherit_template_once"
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "relationships.$partner_id.partnership_status",
+              "value": "separate_households"
+            }
+          ],
+          "immediate_log": "「今は別々に暮らしながら関係を続ける」を選んだ。",
+          "followups": [
+            {
+              "id": "partnership_separate",
+              "delay_quarters": 2,
+              "type": "record",
+              "condition": "protagonist_alive_and_partner_alive",
+              "text": "別々の暮らしを続ける中で、互いの関係を確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ]
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    },
+    {
+      "event_id": "treatment_decision",
+      "once_key": "life_id:decision_instance_id:choice_id",
+      "preconditions": [
+        "event_and_choice_eligible",
+        "bound_people_and_context_valid",
+        "illness.id_exists",
+        "offer.treatment.options_known",
+        "offer.treatment.costs_affordable",
+        "offer.treatment.review_quarters_positive"
+      ],
+      "choices": [
+        {
+          "choice_id": "care",
+          "numeric_effects": {
+            "mode": "replace_template_once",
+            "values": {
+              "resources": -3
+            }
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.illnesses.$illness_id.care_plan",
+              "value": {
+                "mode": "treatment",
+                "plan_id": "$offer.treatment.treatment_plan_id",
+                "start_quarter": "$clock.index"
+              }
+            },
+            {
+              "op": "schedule",
+              "path": "world_tasks",
+              "value": {
+                "task": "illness_review",
+                "illness_id": "$illness.id",
+                "at": "$clock.index+$offer.treatment.review_quarters",
+                "outcome_model": "$offer.treatment.outcome_model_id",
+                "cancel_if": "protagonist_dead_or_illness_resolved"
+              }
+            }
+          ],
+          "immediate_log": "「提示された療養を選ぶ」を選んだ。",
+          "followups": [
+            {
+              "id": "treatment_review_care",
+              "delay_quarters": "$offer.treatment.review_quarters",
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "選んだ療養や支えのもとで、状態と暮らしの負担を確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ],
+          "branch_contract": {
+            "improving": "病状モデルに定義された改善を適用。完治とは限らない。",
+            "stable": "病状を継続し、必要なら次回評価を予約する。",
+            "worsening": "病状モデルに従い悪化を適用し、実行可能な対応を再提示する。",
+            "death": "死亡モデルだけで処理する。ここで独立の追加死亡抽選を行わない。",
+            "probability_source": "$offer.treatment.outcome_model_id の出典付き、または明示したゲーム用仮説データ。未定義ならイベントを提示しない。"
+          }
+        },
+        {
+          "choice_id": "support",
+          "numeric_effects": {
+            "mode": "replace_template_once",
+            "values": {
+              "resources": -1,
+              "happiness": 1
+            }
+          },
+          "state_operations": [
+            {
+              "op": "set",
+              "path": "protagonist.illnesses.$illness_id.care_plan",
+              "value": {
+                "mode": "daily_support",
+                "plan_id": "$offer.treatment.support_plan_id",
+                "start_quarter": "$clock.index"
+              }
+            },
+            {
+              "op": "schedule",
+              "path": "world_tasks",
+              "value": {
+                "task": "illness_review",
+                "illness_id": "$illness.id",
+                "at": "$clock.index+$offer.treatment.review_quarters",
+                "outcome_model": "$offer.treatment.outcome_model_id",
+                "cancel_if": "protagonist_dead_or_illness_resolved"
+              }
+            }
+          ],
+          "immediate_log": "「利用できる日常の支えを中心にする」を選んだ。",
+          "followups": [
+            {
+              "id": "treatment_review_support",
+              "delay_quarters": "$offer.treatment.review_quarters",
+              "type": "record",
+              "condition": "protagonist_alive",
+              "text": "選んだ療養や支えのもとで、状態と暮らしの負担を確かめます。",
+              "numeric_effects": {},
+              "narration_policy": "記録時点の状態で描く。元の選択効果を再適用しない。"
+            }
+          ],
+          "branch_contract": {
+            "improving": "病状モデルに定義された改善を適用。完治とは限らない。",
+            "stable": "病状を継続し、必要なら次回評価を予約する。",
+            "worsening": "病状モデルに従い悪化を適用し、実行可能な対応を再提示する。",
+            "death": "死亡モデルだけで処理する。ここで独立の追加死亡抽選を行わない。",
+            "probability_source": "$offer.treatment.outcome_model_id の出典付き、または明示したゲーム用仮説データ。未定義ならイベントを提示しない。"
+          }
+        }
+      ],
+      "source_status": "game_authored_transition_contract"
+    }
+  ]
+}

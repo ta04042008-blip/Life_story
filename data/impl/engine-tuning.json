@@ -1,0 +1,125 @@
+{
+  "schema_version": "0.1",
+  "status": "implementation_game_tuning_not_measured",
+  "evidence_tier": "game_hypothesis",
+  "note": "Every number in this file is an implementation-side game-tuning value, chosen to make the spec's mechanisms playable. None of them is a measured or historical figure. They are meant to be adjusted after play-testing (spec section 10). Names mirror the module that reads them.",
+  "versions": { "schema_version": 1, "rules_version": "prototype-0.1+impl.1", "data_version": "life-story-data-2026.10.23.1" },
+  "reference_year": 2026,
+
+  "birth": {
+    "deep_dive_place_share": 0.5,
+    "deep_dive_place_share_note": "When a drawn region and year fall inside an authored deep-dive window, this is the chance the life is placed in that named place; otherwise a generic estimated scene is used.",
+    "health_noise": 10, "charm_noise": 10, "resource_individual_noise": 5,
+    "household_composition": [
+      { "id": "two_guardians", "label": "二人の養育者", "parents": 2, "elder": false, "kin_adult": false, "guardian_kind": null, "w": 0.38 },
+      { "id": "single_guardian", "label": "一人の養育者", "parents": 1, "elder": false, "kin_adult": false, "guardian_kind": null, "w": 0.14 },
+      { "id": "extended_with_elder", "label": "養育者と祖父母など年長者の同居", "parents": 2, "elder": true, "kin_adult": false, "guardian_kind": null, "w": 0.30 },
+      { "id": "kin_guardians", "label": "養育者と親族の同居", "parents": 1, "elder": false, "kin_adult": true, "guardian_kind": null, "w": 0.10 },
+      { "id": "elder_guardian", "label": "親以外の親族による養育", "parents": 0, "elder": false, "kin_adult": false, "guardian_kind": "elder_guardian", "w": 0.08 }
+    ],
+    "older_siblings_weights": [0.45, 0.30, 0.18, 0.07]
+  },
+
+  "relationship_templates": {
+    "parent": { "closeness": [50, 75], "trust": [55, 75], "tension": [5, 25] },
+    "grandparent": { "closeness": [45, 70], "trust": [50, 70], "tension": [3, 18] },
+    "aunt_uncle": { "closeness": [35, 60], "trust": [45, 65], "tension": [5, 20] },
+    "sibling": { "closeness": [40, 70], "trust": [40, 65], "tension": [10, 35] },
+    "friend": { "closeness": [30, 50], "trust": [35, 55], "tension": [3, 15] },
+    "peer": { "closeness": [20, 45], "trust": [25, 45], "tension": [5, 20] },
+    "mentor": { "closeness": [25, 45], "trust": [45, 65], "tension": [3, 15] },
+    "partner": { "closeness": [55, 75], "trust": [50, 70], "tension": [8, 22] },
+    "child": { "closeness": [60, 85], "trust": [55, 75], "tension": [5, 20] },
+    "junior": { "closeness": [25, 45], "trust": [35, 55], "tension": [3, 15] },
+    "other_kin": { "closeness": [30, 55], "trust": [40, 60], "tension": [5, 25] }
+  },
+
+  "social": {
+    "social_cap": 10,
+    "peer_target": 2, "peer_meet": 0.12, "friend_promote_closeness": 55,
+    "friend_target": 3, "friend_meet": 0.04,
+    "candidate_meet": 0.035, "candidate_growth": 2.0, "candidate_leave": 0.03,
+    "junior_meet": 0.03,
+    "cohabit_growth": 0.5, "cohabit_closeness_cap": 85, "yearly_fade": 1,
+    "sibling_cap": 4, "sibling_birth": 0.02, "child_cap": 4, "child_birth": 0.018
+  },
+
+  "mortality": { "health_slope": 0.012, "resource_slope": 0.005, "hr_min": 0.6, "hr_max": 2.5, "max_age": 122,
+    "note": "q' = 1-(1-q_x)^HR with HR = exp(-health_slope*(health-65)) * exp(-resource_slope*(resources-50)), clamped. A bounded game tuning, not an estimated effect." },
+
+  "state": {
+    "health_target_base": 72, "health_decline_from": 45, "health_decline_per_year": 0.45, "health_resource_slope": 0.12, "health_drift": 0.10,
+    "scarcity_below": 25, "scarcity_health_loss": 0.4,
+    "resource_return": 0.04, "resource_noise": 1.2, "child_cost": 0.15,
+    "learning_independent": 0.15,
+    "learning_access": { "household": 0.35, "community": 0.5, "master": 0.6, "school": 0.9 },
+    "learning_enrolled": 1.0,
+    "support_weight": 1.0, "support_cap": 5, "isolation_penalty": 6, "happiness_rate": 0.10
+  },
+
+  "access": {
+    "min_resources": { "household": 0, "community": 15, "master": 40, "school": 28 },
+    "length_quarters": { "household": [12, 32], "community": [12, 28], "master": [8, 24], "school": [24, 48] }
+  },
+  "education": { "min_resources": 20, "share": 0.55, "difficulty": 50 },
+  "apprenticeship": { "min_resources": 15, "share": 0.45, "difficulty": 50, "skill_per_quarter": 1.4, "completion_bonus": 8, "partial_bonus": 3 },
+  "work": {
+    "job_share_unemployed": 0.6, "job_share_employed": 0.2,
+    "wage_bonus": { "low": 0, "mid": 1, "high": 2 },
+    "income_per_quarter": { "low": 0.25, "mid": 0.5, "high": 0.9 },
+    "skill_per_quarter": 0.4, "retire_from": 60, "retire_step": 0.02, "retire_max": 0.3, "health_stop": 15
+  },
+  "migration": { "destination_profile_weights": { "urban_or_city": 0.4, "town_or_market_center": 0.3, "rural_or_village": 0.2, "mobile_or_seasonal_livelihood": 0.1 }, "resource_keep": 0.85, "new_peer_chance": 0.5 },
+  "partner": { "min_closeness": 55, "min_trust": 45, "offer_per_quarter": 0.25, "reoffer_quarters": 8 },
+
+  "episodes": {
+    "severity_weights": {
+      "short_illness": { "mild": 0.7, "moderate": 0.27, "serious": 0.03 },
+      "injury": { "mild": 0.55, "moderate": 0.35, "serious": 0.10 },
+      "chronic_condition": { "moderate": 0.7, "serious": 0.3 }
+    },
+    "duration": { "short_illness": [1, 2], "injury": [1, 3], "chronic_condition": null },
+    "health_loss": { "mild": 0.8, "moderate": 2.0, "serious": 4.0 },
+    "health_loss_chronic": { "moderate": 0.5, "serious": 1.2 },
+    "plan_factor": { "treatment": 0.6, "daily_support": 0.8 },
+    "natural_recovery": { "mild": 0.6, "moderate": 0.35, "serious": 0.1 },
+    "review_quarters": { "moderate": 2, "serious": 3 },
+    "care_min_resources": 10,
+    "review": {
+      "w_health": 0.4, "w_resources": 0.15, "w_support": 0.25,
+      "plan_bonus": { "treatment": 10, "daily_support": 6 },
+      "difficulty": { "mild": 35, "moderate": 45, "serious": 65, "chronic": 70 },
+      "continue_share": 0.7, "worsen_health": 5
+    }
+  },
+
+  "personality": {
+    "yearly_decay": 0.9, "evidence_cap": 400, "settled_evidence": 8, "type_min_age": 15, "type_min_choices": 20,
+    "weights": { "small": 1, "major": 3 }
+  },
+  "selection": { "focus_boost": 1.4, "recent_penalty": 0.35, "recent_window": 12 },
+
+  "skill_effects": {
+    "learn_letters.learn": { "literacy": 5 },
+    "learn_letters.help": { "livelihood": 1 },
+    "practice_basics.repeat": { "livelihood": 1, "craft": 1 },
+    "practice_basics.vary": { "craft": 2 },
+    "household_task.household": { "livelihood": 2 },
+    "household_task.own": { "literacy": 1 },
+    "craft_interest.try": { "craft": 4 },
+    "craft_interest.watch": { "craft": 1 },
+    "school_collaboration.specialize": { "literacy": 1 },
+    "study_preparation.schedule": { "literacy": 1 },
+    "study_preparation.adapt": { "literacy": 1 },
+    "mentor_advice.follow": { "craft": 1 },
+    "extra_work.accept": { "livelihood": 2 },
+    "adult_learning.learn": { "literacy": 1, "craft": 1 },
+    "adult_learning.practice": { "livelihood": 2 },
+    "care_responsibility.direct": { "care": 2 },
+    "care_responsibility.coordinate": { "care": 1 },
+    "later_sharing.record": { "literacy": 1 }
+  },
+  "choice_hooks": {
+    "extra_work.accept": { "consume_offer": "work" }
+  }
+}

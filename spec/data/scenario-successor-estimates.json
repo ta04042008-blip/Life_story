@@ -1,0 +1,304 @@
+{
+  "schema_version": "0.1",
+  "status": "authored_continuation_contexts",
+  "purpose": "Playable successor-period framing for every scenario; historical and post-2100 conditions are game estimates, not exhaustive histories.",
+  "coverage_rule": "All scenarios have a context after the configured start period. The engine advances one quarter at a time and switches to the matching successor year range. Events still require person-, place-, age-, and offer-level eligibility.",
+  "scenarios": {
+    "jp_historical": {
+      "continuation_policy": "Update context at the next quarter after the scenario end; retain person, family, relationships, skills, resources, and ongoing illness. Historical framing is an authored estimate, not a claim that every resident experienced the same change.",
+      "successors": [
+        {
+          "from_year": 1871,
+          "to_year": 1925,
+          "label": "近代化と制度変化",
+          "evidence_tier": "game_estimate",
+          "note": "制度・教育・移動の変化を地域の一つの筋書きとして扱う。村の全住民に同じ影響を与えない。"
+        },
+        {
+          "from_year": 1926,
+          "to_year": 1945,
+          "label": "戦時期",
+          "evidence_tier": "game_estimate",
+          "note": "徴用・物資不足・移動制限等は人物・地域条件がある場合の出来事候補。全員に自動適用しない。"
+        },
+        {
+          "from_year": 1946,
+          "to_year": 1999,
+          "label": "戦後から現代前夜",
+          "evidence_tier": "game_estimate",
+          "note": "復興、都市化、教育・雇用の変化を年齢・世帯・居住地に応じた仮説で表す。"
+        },
+        {
+          "from_year": 2000,
+          "to_year": 2100,
+          "label": "現代・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "二本松市を舞台に国別WPP死亡系列を基準とし、地域差は推定として扱う。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "世代交代・生活制度を持続させるゲーム用仮説。予測値とは表示しない。"
+        }
+      ]
+    },
+    "cn_historical": {
+      "continuation_policy": "Update context at the next quarter after the scenario end; retain person, family, relationships, skills, resources, and ongoing illness. Historical framing is an authored estimate, not a claim that every resident experienced the same change.",
+      "successors": [
+        {
+          "from_year": 1851,
+          "to_year": 1911,
+          "label": "清末の変化",
+          "evidence_tier": "game_estimate",
+          "note": "制度・都市経済の変化を一つの都市筋書きで表す。個人の経験は世帯と機会で分ける。"
+        },
+        {
+          "from_year": 1912,
+          "to_year": 1948,
+          "label": "共和制期と戦乱",
+          "evidence_tier": "game_estimate",
+          "note": "政体・戦争・移動の変化を地域別の推定イベントとして扱う。"
+        },
+        {
+          "from_year": 1949,
+          "to_year": 1999,
+          "label": "中華人民共和国期",
+          "evidence_tier": "game_estimate",
+          "note": "制度・教育・就業・都市生活の変化を段階化し、個人の参加は選択と条件で決める。"
+        },
+        {
+          "from_year": 2000,
+          "to_year": 2100,
+          "label": "現代・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "蘇州市を舞台に中国国別WPP死亡系列を基準とし、市域差は推定として扱う。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "生活制度を持続させるゲーム用仮説。予測値とは表示しない。"
+        }
+      ]
+    },
+    "in_historical": {
+      "continuation_policy": "Update context at the next quarter after the scenario end; retain person, family, relationships, skills, resources, and ongoing illness. Historical framing is an authored estimate, not a claim that every resident experienced the same change.",
+      "successors": [
+        {
+          "from_year": 1701,
+          "to_year": 1857,
+          "label": "ムガル後期から植民地支配への移行",
+          "evidence_tier": "game_estimate",
+          "note": "政権・徴税・交易の変化を地域・世帯・職業の条件つきで表す。"
+        },
+        {
+          "from_year": 1858,
+          "to_year": 1947,
+          "label": "英領期",
+          "evidence_tier": "game_estimate",
+          "note": "制度・交通・教育の変化を地域差のある推定文脈として扱う。"
+        },
+        {
+          "from_year": 1948,
+          "to_year": 1999,
+          "label": "独立後",
+          "evidence_tier": "game_estimate",
+          "note": "教育・雇用・都市化の変化を居住地・世帯条件つきで表す。"
+        },
+        {
+          "from_year": 2000,
+          "to_year": 2100,
+          "label": "現代・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "アグラ市を舞台にインド国別WPP死亡系列を基準とし、市域差は推定として扱う。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "生活制度を持続させるゲーム用仮説。予測値とは表示しない。"
+        }
+      ]
+    },
+    "ml_historical": {
+      "continuation_policy": "Update context at the next quarter after the scenario end; retain person, family, relationships, skills, resources, and ongoing illness. Historical framing is an authored estimate, not a claim that every resident experienced the same change.",
+      "successors": [
+        {
+          "from_year": 1592,
+          "to_year": 1899,
+          "label": "ソンガイ後の地域変化",
+          "evidence_tier": "game_estimate",
+          "note": "政治・交易ネットワークの変化を複数の可能な筋書きとして表す。町の暮らしを断絶として一律描写しない。"
+        },
+        {
+          "from_year": 1900,
+          "to_year": 1960,
+          "label": "植民地期と独立への移行",
+          "evidence_tier": "game_estimate",
+          "note": "行政・交通・教育の変化を地域と家族の条件に応じた推定文脈で表す。"
+        },
+        {
+          "from_year": 1961,
+          "to_year": 1999,
+          "label": "独立後",
+          "evidence_tier": "game_estimate",
+          "note": "都市生活・教育・仕事の変化を地域差のある仮説として表す。"
+        },
+        {
+          "from_year": 2000,
+          "to_year": 2100,
+          "label": "現代・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "トンブクトゥ市街を舞台にマリ国別WPP死亡系列を基準とし、市域差は推定として扱う。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "生活制度を持続させるゲーム用仮説。予測値とは表示しない。"
+        }
+      ]
+    },
+    "fr_historical": {
+      "continuation_policy": "Update context at the next quarter after the scenario end; retain person, family, relationships, skills, resources, and ongoing illness. Historical framing is an authored estimate, not a claim that every resident experienced the same change.",
+      "successors": [
+        {
+          "from_year": 1801,
+          "to_year": 1870,
+          "label": "19世紀の都市と産業の変化",
+          "evidence_tier": "game_estimate",
+          "note": "都市・職業・教育の変化を人物と世帯の条件に応じた推定文脈で表す。"
+        },
+        {
+          "from_year": 1871,
+          "to_year": 1945,
+          "label": "共和国期と戦時期",
+          "evidence_tier": "game_estimate",
+          "note": "戦争や制度変化は居住地・年齢・職業に応じて発生させる。"
+        },
+        {
+          "from_year": 1946,
+          "to_year": 1999,
+          "label": "戦後から現代前夜",
+          "evidence_tier": "game_estimate",
+          "note": "復興・福祉・教育・雇用の変化を段階化した推定文脈で表す。"
+        },
+        {
+          "from_year": 2000,
+          "to_year": 2100,
+          "label": "現代・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "ディジョン市を舞台にフランス国別WPP死亡系列を基準とし、市域差は推定として扱う。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "生活制度を持続させるゲーム用仮説。予測値とは表示しない。"
+        }
+      ]
+    },
+    "jp_modern": {
+      "continuation_policy": "Continue quarterly from the next year without ending the life. Use WPP 2024 national mortality baseline through 2100; future social conditions and post-2100 mortality are explicitly game estimates.",
+      "successors": [
+        {
+          "from_year": "reference_year+1",
+          "to_year": 2100,
+          "label": "公表推計・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "日本の全国死亡系列を基準にし、市域の機会・制度差は個別データまたは推定として扱う。WPPの2024–2100年Medium variant系列を、基準年の翌年から適用する。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "人口・制度の継続性を保つためのゲーム用仮説。予測値・史実と表示しない。"
+        }
+      ]
+    },
+    "cn_modern": {
+      "continuation_policy": "Continue quarterly from the next year without ending the life. Use WPP 2024 national mortality baseline through 2100; future social conditions and post-2100 mortality are explicitly game estimates.",
+      "successors": [
+        {
+          "from_year": "reference_year+1",
+          "to_year": 2100,
+          "label": "公表推計・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "中国の全国死亡系列を基準にし、市域の機会・制度差は個別データまたは推定として扱う。WPPの2024–2100年Medium variant系列を、基準年の翌年から適用する。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "人口・制度の継続性を保つためのゲーム用仮説。予測値・史実と表示しない。"
+        }
+      ]
+    },
+    "in_modern": {
+      "continuation_policy": "Continue quarterly from the next year without ending the life. Use WPP 2024 national mortality baseline through 2100; future social conditions and post-2100 mortality are explicitly game estimates.",
+      "successors": [
+        {
+          "from_year": "reference_year+1",
+          "to_year": 2100,
+          "label": "公表推計・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "インドの全国死亡系列を基準にし、市域の機会・制度差は個別データまたは推定として扱う。WPPの2024–2100年Medium variant系列を、基準年の翌年から適用する。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "人口・制度の継続性を保つためのゲーム用仮説。予測値・史実と表示しない。"
+        }
+      ]
+    },
+    "ml_modern": {
+      "continuation_policy": "Continue quarterly from the next year without ending the life. Use WPP 2024 national mortality baseline through 2100; future social conditions and post-2100 mortality are explicitly game estimates.",
+      "successors": [
+        {
+          "from_year": "reference_year+1",
+          "to_year": 2100,
+          "label": "公表推計・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "マリの全国死亡系列を基準にし、市域の機会・制度差は個別データまたは推定として扱う。WPPの2024–2100年Medium variant系列を、基準年の翌年から適用する。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "人口・制度の継続性を保つためのゲーム用仮説。予測値・史実と表示しない。"
+        }
+      ]
+    },
+    "fr_modern": {
+      "continuation_policy": "Continue quarterly from the next year without ending the life. Use WPP 2024 national mortality baseline through 2100; future social conditions and post-2100 mortality are explicitly game estimates.",
+      "successors": [
+        {
+          "from_year": "reference_year+1",
+          "to_year": 2100,
+          "label": "公表推計・予測期間",
+          "evidence_tier": "mixed_national_series_and_game_estimate",
+          "note": "フランスの全国死亡系列を基準にし、市域の機会・制度差は個別データまたは推定として扱う。WPPの2024–2100年Medium variant系列を、基準年の翌年から適用する。"
+        },
+        {
+          "from_year": 2101,
+          "to_year": 9999,
+          "label": "予測期間後",
+          "evidence_tier": "game_estimate",
+          "note": "人口・制度の継続性を保つためのゲーム用仮説。予測値・史実と表示しない。"
+        }
+      ]
+    }
+  },
+  "context_id_template": "{scenario_id}:successor:{from_year}-{to_year}; instantiate the first modern successor from reference_year+1."
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "0.1",
+  "status": "gameplay_estimates_for_history",
+  "not_observed_historical_rates": true,
+  "public_enabled": false,
+  "purpose": "Playable age-specific mortality priors where no suitable complete local life table is currently available. Values are authored estimates and must be displayed as such.",
+  "evidence_tier": "game_authored_low_confidence_estimate",
+  "sampling_policy": {
+    "default_mode": "central",
+    "sensitivity_modes": ["low", "central", "high"],
+    "uncertainty_unit": "The low/central/high profiles apply to the scenario-year table as a whole, not as independent random draws per person or age band.",
+    "calendar_year_policy": "Use a stable scenario profile across the current authoring window unless a separately authored crisis or period change is active.",
+    "quarterly_conversion": "For annual q_x, use q_Q = 1 - (1 - q_x)^(1/4), except where a documented seasonal event allocates risk across quarters.",
+    "event_overlap": "Historical crisis events modify the period risk through an explicitly documented hazard multiplier and must not be included again as a second independent baseline death roll."
+  },
+  "age_bands": [
+    {"age_start": 0, "age_end_exclusive": 1, "rural_agrarian": {"low": 0.18, "central": 0.205, "high": 0.23}, "urban_trade": {"low": 0.18, "central": 0.235, "high": 0.32}},
+    {"age_start": 1, "age_end_exclusive": 5, "rural_agrarian": {"low": 0.03, "central": 0.04, "high": 0.07}, "urban_trade": {"low": 0.035, "central": 0.05, "high": 0.08}},
+    {"age_start": 5, "age_end_exclusive": 15, "rural_agrarian": {"low": 0.003, "central": 0.006, "high": 0.02}, "urban_trade": {"low": 0.004, "central": 0.008, "high": 0.025}},
+    {"age_start": 15, "age_end_exclusive": 40, "rural_agrarian": {"low": 0.006, "central": 0.012, "high": 0.03}, "urban_trade": {"low": 0.007, "central": 0.014, "high": 0.035}},
+    {"age_start": 40, "age_end_exclusive": 60, "rural_agrarian": {"low": 0.012, "central": 0.025, "high": 0.06}, "urban_trade": {"low": 0.014, "central": 0.028, "high": 0.065}},
+    {"age_start": 60, "age_end_exclusive": 70, "rural_agrarian": {"low": 0.03, "central": 0.06, "high": 0.12}, "urban_trade": {"low": 0.035, "central": 0.065, "high": 0.13}},
+    {"age_start": 70, "age_end_exclusive": 80, "rural_agrarian": {"low": 0.07, "central": 0.13, "high": 0.25}, "urban_trade": {"low": 0.075, "central": 0.14, "high": 0.27}},
+    {"age_start": 80, "age_end_exclusive": 90, "rural_agrarian": {"low": 0.12, "central": 0.24, "high": 0.4}, "urban_trade": {"low": 0.13, "central": 0.25, "high": 0.42}},
+    {"age_start": 90, "age_end_exclusive": 100, "rural_agrarian": {"low": 0.22, "central": 0.4, "high": 0.62}, "urban_trade": {"low": 0.23, "central": 0.42, "high": 0.65}},
+    {"age_start": 100, "age_end_exclusive": null, "rural_agrarian": {"low": 0.35, "central": 0.55, "high": 0.8}, "urban_trade": {"low": 0.36, "central": 0.58, "high": 0.82}}
+  ],
+  "scenario_profiles": {
+    "jp_historical": {
+      "profile": "rural_agrarian",
+      "confidence": "low",
+      "source_reference": "https://www.jstage.jst.go.jp/article/jps/25/0/25_KJ00009385226/_article/-char/ja/",
+      "source_note": "The study discusses a Tokugawa northeastern Japan infant-mortality estimate of about 180-230 per 1,000 births, using a correction method beyond the local registers. The 0.205 central q_0 is a gameplay prior within that broad reference range, not a measured Niita rate. Other ages are authoring estimates."
+    },
+    "cn_historical": {
+      "profile": "urban_trade",
+      "confidence": "very_low",
+      "source_note": "No compatible full age-specific mortality table has been identified. All values are game-authored estimates for play balance and uncertainty exploration, not estimates of all Suzhou residents."
+    },
+    "in_historical": {
+      "profile": "urban_trade",
+      "confidence": "very_low",
+      "source_note": "No compatible full age-specific mortality table has been identified. All values are game-authored estimates for play balance and uncertainty exploration, not estimates of all Agra residents."
+    },
+    "ml_historical": {
+      "profile": "urban_trade",
+      "confidence": "very_low",
+      "source_note": "No compatible full age-specific mortality table has been identified. All values are game-authored estimates for play balance and uncertainty exploration, not estimates of all Timbuktu residents."
+    },
+    "fr_historical": {
+      "profile": "urban_trade",
+      "confidence": "very_low",
+      "source_note": "No compatible full age-specific mortality table has been identified. All values are game-authored estimates for play balance and uncertainty exploration, not estimates of all Dijon residents."
+    }
+  },
+  "required_display_label": "歴史資料が不足するためのゲーム用推定。史実の死亡率ではありません。",
+  "unresolved": [
+    "Historical demographic review for each central and interval value",
+    "Scenario-specific year changes and crisis periods",
+    "Sex-category policy and subgroup calibration",
+    "Sensitivity review of full-life outcomes"
+  ]
+}

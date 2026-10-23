@@ -1,0 +1,218 @@
+{
+  "schema_version": "0.1",
+  "status": "gameplay_estimates_for_specification",
+  "purpose": "Initial ranges for offer generation and illness episodes when scenario-specific measurements are unavailable. These are gameplay hypotheses, not historical or local empirical rates.",
+  "policy": "The low-central-high band is a scenario-wide tuning range. Select a versioned central value for a run; do not reroll the band each quarter. Eligibility, provider existence, age, calendar, relationship, resources, and ongoing state gate every offer.",
+  "unit": "Annual probability of at least one eligible offer being generated for a person in the named opportunity family, before the player chooses. Not chance of acceptance, attendance, employment, migration, cure, or success.",
+  "conversion": "For a constant annual probability p, quarterly probability is 1-(1-p)^(1/4). If no eligible provider or precondition exists, probability is zero.",
+  "evidence_tier": "game_estimate",
+  "profiles": {
+    "historical_rural": {
+      "learning": [
+        0.08,
+        0.25
+      ],
+      "paid_or_household_work": [
+        0.25,
+        0.6
+      ],
+      "migration": [
+        0.01,
+        0.06
+      ],
+      "care_support": [
+        0.1,
+        0.35
+      ]
+    },
+    "historical_urban_trade": {
+      "learning": [
+        0.1,
+        0.3
+      ],
+      "paid_or_household_work": [
+        0.22,
+        0.55
+      ],
+      "migration": [
+        0.02,
+        0.08
+      ],
+      "care_support": [
+        0.1,
+        0.35
+      ]
+    },
+    "historical_trade_learning": {
+      "learning": [
+        0.1,
+        0.32
+      ],
+      "paid_or_household_work": [
+        0.18,
+        0.5
+      ],
+      "migration": [
+        0.03,
+        0.1
+      ],
+      "care_support": [
+        0.1,
+        0.35
+      ]
+    },
+    "historical_urban_craft": {
+      "learning": [
+        0.08,
+        0.28
+      ],
+      "paid_or_household_work": [
+        0.22,
+        0.55
+      ],
+      "migration": [
+        0.02,
+        0.08
+      ],
+      "care_support": [
+        0.1,
+        0.35
+      ]
+    },
+    "modern_school_work": {
+      "learning": [
+        0.25,
+        0.55
+      ],
+      "paid_or_household_work": [
+        0.2,
+        0.55
+      ],
+      "migration": [
+        0.01,
+        0.08
+      ],
+      "care_support": [
+        0.2,
+        0.6
+      ]
+    }
+  },
+  "scenarios": {
+    "jp_historical": {
+      "profile_id": "historical_rural",
+      "note": "資料不足のため、到達可能な師・仕事・移動先が登場するゲーム用基準。仁井田村の実測比率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "cn_historical": {
+      "profile_id": "historical_urban_trade",
+      "note": "蘇州都市圏の物語用基準。私塾・商家内学習・徒弟等の存在を機会候補にするが、参加率の史実値ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "in_historical": {
+      "profile_id": "historical_urban_trade",
+      "note": "アグラ周辺の物語用基準。家・師・仕事場での学びと仕事を扱う推定で、住民比率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "ml_historical": {
+      "profile_id": "historical_trade_learning",
+      "note": "トンブクトゥの物語用基準。交易・写本関連の機会を候補化するが、識字率や職業比率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "fr_historical": {
+      "profile_id": "historical_urban_craft",
+      "note": "ディジョンの物語用基準。家業・徒弟・雇用を扱うが、制度参加率の史実値ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "jp_modern": {
+      "profile_id": "modern_school_work",
+      "note": "学校・職業・地域活動を持つ現代の物語用基準。市別の観測率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "cn_modern": {
+      "profile_id": "modern_school_work",
+      "note": "学校・職業・地域活動を持つ現代の物語用基準。蘇州市の観測率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "in_modern": {
+      "profile_id": "modern_school_work",
+      "note": "学校・職業・地域活動を持つ現代の物語用基準。アグラ市の観測率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "ml_modern": {
+      "profile_id": "modern_school_work",
+      "note": "学校・職業・地域活動を持つ現代の物語用基準。トンブクトゥ市街の観測率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    },
+    "fr_modern": {
+      "profile_id": "modern_school_work",
+      "note": "学校・職業・地域活動を持つ現代の物語用基準。ディジョン市の観測率ではない。",
+      "uncertainty_mode": "scenario_global_low_central_high"
+    }
+  },
+  "health_episode_model": {
+    "interpretation": "Illustrative annual chance of a new episode, conditional on the person being alive and not already in an episode of that family. These are narrative pacing parameters, not incidence estimates. Separate chance of recovery, lasting effect, and death must be modeled per episode and may not be inferred from this table.",
+    "age_bands": {
+      "0-4": {
+        "short_illness": [
+          0.12,
+          0.35
+        ],
+        "injury": [
+          0.01,
+          0.06
+        ]
+      },
+      "5-14": {
+        "short_illness": [
+          0.08,
+          0.25
+        ],
+        "injury": [
+          0.02,
+          0.08
+        ]
+      },
+      "15-39": {
+        "short_illness": [
+          0.06,
+          0.2
+        ],
+        "injury": [
+          0.02,
+          0.08
+        ]
+      },
+      "40-64": {
+        "short_illness": [
+          0.08,
+          0.25
+        ],
+        "injury": [
+          0.02,
+          0.08
+        ],
+        "chronic_condition": [
+          0.01,
+          0.05
+        ]
+      },
+      "65+": {
+        "short_illness": [
+          0.12,
+          0.35
+        ],
+        "injury": [
+          0.02,
+          0.1
+        ],
+        "chronic_condition": [
+          0.04,
+          0.16
+        ]
+      }
+    },
+    "scenario_adjustment": "No automatic adjustment by culture, country, class, or household label. Add a scenario-specific modifier only as a separate estimated record with a reason and uncertainty range.",
+    "treatment": "Treatment offers require a resolved illness episode, at least two coherent plans, time/cost consequences, and an outcome model. Unknown historical treatment is represented as care, rest, or support options with fictional outcomes; do not assign modern medicine to historical contexts."
+  }
+}
