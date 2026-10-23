@@ -241,3 +241,21 @@ button.tag { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 .reduce-motion *, .reduce-motion *::before { animation: none !important; transition: none !important; }
 @media (max-width: 380px) { .kv { grid-template-columns: 1fr; gap: 0; } .meter { grid-template-columns: 4rem 1fr 4rem; } }
+
+/* 出生の抽選演出 */
+.draw { display: grid; gap: 14px; justify-items: center; text-align: center; padding-top: 28px; }
+.draw-title { font-size: 1.6rem; letter-spacing: .3em; margin: 0; }
+.draw-msg { min-height: 2.8em; margin: 0; color: var(--muted); }
+.draw-ball { width: 64px; height: 64px; border: 3px solid var(--line); background: var(--panel2); display: grid; place-items: center; font-size: 30px; color: var(--accent); box-shadow: 0 4px 0 var(--deep); animation: bob .6s steps(2) infinite; }
+.draw.done .draw-ball { animation: stamp .5s ease-out both; }
+.reel { width: 100%; background: var(--panel); border: 3px solid var(--line); box-shadow: 0 4px 0 var(--deep); padding: 8px 6px 12px; }
+.reel-k { font-size: .85rem; color: var(--muted); }
+.reel-v { font-size: 2.6rem; font-weight: 700; letter-spacing: .08em; min-height: 1.3em; }
+.reel-v.small { font-size: 1.6rem; padding: .3em 0; }
+.reel.spin .reel-v { color: var(--deep); filter: blur(.4px); }
+.reel.hit { border-color: var(--accent); background: var(--panel2); }
+.reel.hit .reel-v { color: var(--accent); animation: pop .45s ease-out; }
+.draw .stack { width: 100%; }
+.draw [hidden] { display: none; }
+@keyframes bob { 50% { transform: translateY(-6px) rotate(8deg); } }
+@keyframes pop { 0% { transform: scale(1.6); } 60% { transform: scale(.94); } 100% { transform: scale(1); } }
