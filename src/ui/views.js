@@ -21,12 +21,16 @@ export function meter(label, value, extra) {
     h('span', { class: 'meter-band', text: extra || bandLabel(value) }));
 }
 
-export function stateMeters(life) {
+const stars = (v) => { const n = Math.max(0, Math.min(5, Math.ceil(v / 20))); return '★'.repeat(n) + '☆'.repeat(5 - n); };
+export function statGrid(life) {
   const p = life.protagonist, hh = householdOf(life);
-  return h('div', { class: 'meters' },
-    meter('健康', p.health), meter('学び', p.learning), meter('魅力', p.charm),
-    meter('暮らし', hh.resources.display, BAND_LABELS[hh.resources.band]), meter('幸福感', p.happiness));
+  const rows = [['body', '健康', p.health, bandLabel(p.health)], ['know', '学び', p.learning, bandLabel(p.learning)], ['charm', '魅力', p.charm, bandLabel(p.charm)],
+    ['life', '暮らし', hh.resources.display, BAND_LABELS[hh.resources.band]], ['will', '幸福感', p.happiness, bandLabel(p.happiness)]];
+  return h('div', { class: 'stats' }, rows.map(([cls, label, v, band]) => h('div', { class: 'stat ' + cls, role: 'img', 'aria-label': `${label}：${band}` },
+    h('div', { class: 'h' }, h('b', { text: label }), h('span', { 'aria-hidden': 'true', text: stars(v) })),
+    h('div', { class: 'sub' }, `${Math.round(v)}`, h('span', { class: 'band', text: `　${band}` })))));
 }
+export const stateMeters = statGrid;
 
 /** One sentence describing how life is going right now. */
 export function lifeLine(life, ctx) {
@@ -248,12 +252,13 @@ export function dataPanel(life, D, ctx) {
 export function decisionView(life, D, d, ctx, handlers) {
   const ex = life.settings.expression;
   const wrap = h('div', { class: 'decision', role: 'group', 'aria-labelledby': 'dec-title' });
-  wrap.append(h('p', { class: 'dec-kind' + (d.kind === 'major' ? ' major' : ''), text: d.kind === 'major' ? '人生の決断' : '今期の選択' }));
   wrap.append(h('h3', { id: 'dec-title', text: d.title }));
   if (d.actor === 'caregiver') wrap.append(h('p', { class: 'note', text: '幼い時期のため、養育者が決めます。' }));
   const tgt = d.target && life.persons[d.target.person_id];
   if (tgt) wrap.append(h('p', { class: 'muted', text: `関わる人：${tgt.name}（${personSummary(life, tgt).label}）` }));
-  wrap.append(h('p', { class: 'dec-text', text: ex === 'brief' ? d.text_brief : d.text_standard }));
+  if (handlers.scene) wrap.append(handlers.scene());
+  const full = ex === 'brief' ? d.text_brief : d.text_standard;
+  wrap.append(h('p', { class: 'dec-text', 'data-full': full, 'aria-label': full, text: full }));
   if (d.detail) wrap.append(h('p', { class: 'dec-detail', text: d.detail }));
   const ul = h('div', { class: 'choices' });
   for (const c of d.choices) ul.append(h('button', { class: 'choice', onclick: () => handlers.choose(c.id) }, h('span', { text: c.text }), c.risk >= 2 ? h('small', { text: '結果にばらつきがあります' }) : null));
