@@ -7,6 +7,7 @@ import { buildReview } from '../sim/review.js';
 import { ageOf, yearOf, quarterOf } from '../sim/calendar.js';
 import { personSummary } from '../sim/persons.js';
 import { personalityView } from '../sim/personality.js';
+import { REGION_LABELS } from '../sim/context.js';
 import { BAND_LABELS } from '../sim/effects.js';
 import { FOCUS_LABELS } from '../sim/decisions.js';
 import { entryText } from '../sim/history.js';
@@ -86,7 +87,44 @@ function startNew(seed) {
   if (S.life && !S.life.dead) S.store.stash(S.life);
   const life = newLife(S.D, seed == null ? randomSeed() : seed);
   life.settings.expression = S.store.getPref('expression', 'standard');
-  S.life = life; showBirth();
+  S.life = life; showDraw();
+}
+
+
+// ------------------------------------------------------------------------------------------------ birth draw (演出のみ: 結果はすでに決まっており、乱数列には触れない)
+function showDraw() {
+  S.screen = 'draw';
+  const o = S.life.origin, win = o.sampling.year_window;
+  const regions = Object.values(REGION_LABELS);
+  const rnd = (n) => Math.floor(Math.random() * n);
+  const yearBox = h('div', { class: 'reel-v', text: '????' });
+  const regBox = h('div', { class: 'reel-v small', text: '？？？' });
+  const yearReel = h('div', { class: 'reel' }, h('div', { class: 'reel-k', text: '生まれた年' }), yearBox);
+  const regReel = h('div', { class: 'reel' }, h('div', { class: 'reel-k', text: '生まれた地域' }), regBox);
+  const msg = h('p', { class: 'draw-msg', 'aria-live': 'polite', text: 'どんな時代に、どこで生まれるのだろう…' });
+  const next = h('button', { class: 'btn primary big', hidden: true, onclick: () => showBirth() }, '出生届を見る');
+  const skip = h('button', { class: 'btn ghost', onclick: () => finish(true) }, 'スキップ');
+  const main = h('main', { class: 'screen draw' },
+    h('div', { class: 'draw-ball', 'aria-hidden': 'true', text: '★' }),
+    h('h1', { class: 'draw-title', text: '人生の抽選' }), msg, yearReel, regReel, h('div', { class: 'stack' }, next, skip));
+  root.replaceChildren(main); window.scrollTo(0, 0);
+  const timers = []; let done = false;
+  const later = (f, ms) => timers.push(setTimeout(f, ms));
+  function stop(box, reel, text) { box.textContent = text; reel.classList.remove('spin'); reel.classList.add('hit'); }
+  function finish(fast) {
+    if (done) return; done = true; timers.forEach(clearTimeout); clearInterval(spin);
+    stop(yearBox, yearReel, `${o.birth_year}年`); stop(regBox, regReel, o.region_label);
+    msg.textContent = fast ? '人生が決まりました' : `${o.birth_year}年、${o.region_label}。新しい人生の始まりです！`;
+    next.hidden = false; skip.hidden = true; main.classList.add('done'); next.focus?.();
+  }
+  if (!motionOK()) { finish(true); return; }
+  yearReel.classList.add('spin'); regReel.classList.add('spin');
+  const spin = setInterval(() => {
+    if (!yearReel.classList.contains('hit')) yearBox.textContent = `${win.from + rnd(win.to - win.from + 1)}年`;
+    if (!regReel.classList.contains('hit')) regBox.textContent = regions[rnd(regions.length)];
+  }, 70);
+  later(() => { if (done) return; stop(yearBox, yearReel, `${o.birth_year}年`); msg.textContent = `${o.birth_year}年に決まった！ 次は場所…`; }, 1800);
+  later(() => { if (done) return; clearInterval(spin); done = false; finish(false); }, 3200);
 }
 
 // ------------------------------------------------------------------------------------------------ birth explanation
